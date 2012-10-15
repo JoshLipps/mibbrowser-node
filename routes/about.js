@@ -2,13 +2,26 @@
 //
 // GET Import Page
 //
+$ = require('jquery');
+
 var bodystuff = 
 '<h1> About </h1>\n'+
 '<p>We like MIBs and Node. Here\'s a list of tech used to generate this goodness:</p>\n'+
 '<ul>\n'+
-["<li>","node.js","express","ejs","vows","initializr","GitHub","jQuery","</li>"].join('</li><li>') 
-+'</ul>';
+'<li>\n'+
+["node.js","express","ejs","vows","initializr","GitHub","jQuery"].join('</li>\n<li>')+ 
+'</li>'+
+'</ul>';
 
+//var mylist = ['a','b','c'];
+
+//var list1234 = $('ul.alist');
+
+//$.each(mylist, function(index){
+//	$('<li/>').text(mylist[index]).appendTo($('.alist'));
+//});
+
+//console.log(list1234.html());
 
 var scripts = '';
 
