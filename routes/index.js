@@ -13,7 +13,7 @@ var scripts =
 
 exports.index = function(req, res){
   res.render('index', { 
-  	title: 'Upload a MIB ...',
+  	title: 'Node MIB Browser',
   	script:scripts,
 	body: bodystuff
 	});

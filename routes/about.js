@@ -5,7 +5,6 @@
 $ = require('jquery');
 
 var bodystuff = 
-'<h1> About </h1>\n'+
 '<p>We like MIBs and Node. Here\'s a list of tech used to generate this goodness:</p>\n'+
 '<ul>\n'+
 '<li>\n'+
