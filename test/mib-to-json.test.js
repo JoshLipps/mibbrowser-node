@@ -3,7 +3,7 @@
 
 var vows = require('vows'),
     assert = require('assert'),
-	mibtojson = require('../public/javascripts/mib-to-json.js').mibtojson; 
+	mibtojson = require('../public/js/mib-to-json.js').mibtojson; 
 
 var mibSkel= [
     "RFC1213-MIB DEFINITIONS ::= BEGIN",

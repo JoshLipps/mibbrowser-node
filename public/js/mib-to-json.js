@@ -12,7 +12,7 @@ var mibtojson = (function(){
 		,	i;
 
 		if(typeof mib === 'undefined'){
-			return mib;
+			return {};
 		}
 			
 		for(i=0;i<mib.length;i++){

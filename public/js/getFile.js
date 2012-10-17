@@ -4,19 +4,19 @@ $(document).ready(function() {
 });
 
 function handleFileSelect(evt) {
-    var files = evt.target.files // FileList object
-    , read =  new FileReader()
-    , output = []
-    ,  i
-    ,  f;
+    var files = evt.target.files, // FileList object
+    read =  new FileReader(),
+    output = [],
+    i,
+    f;
 
     //
-    for (i = 0, f; f = files[i]; i++) {
+    for (i = 0, f; f = files[i]; i++){
         read.onload = (function(theFile) {
             return function(e) {
                 var mib = mibtojson.parse(e.target.result);
                 $("#list").text(mib);
-                //console.log(e.target.result);
+                //console.log(e.target.result)//;
            };
         })(f);
         read.readAsText(f);
