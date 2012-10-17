@@ -159,17 +159,11 @@ nav a:hover {
    Author's custom styles
    ========================================================================== */
 
-
-
-
-
-
-
-
-
-
-
-
+.footer-container {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
 
 
 

@@ -9,7 +9,8 @@
   "dependencies": {
     "express": "3.0.0rc4",
     "ejs": "*",
-    "snmp-native": "*"
+    "snmp-native": "*",
+    "jquery": "1.7.3"
   },
   "devDependencies": {
     "vows": "0.6.4"
