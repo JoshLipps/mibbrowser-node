@@ -5,11 +5,12 @@
 
 //var jquery = require('jquery');
 
+
 var mibtojson = (function(){
 	var json = {};
 	function removeComments(mib){
-		var reComment = /-{2}.*$/
-		,	i;
+		var reComment = /-{2}.*$/,
+			i;
 
 		if(typeof mib === 'undefined'){
 			return {};

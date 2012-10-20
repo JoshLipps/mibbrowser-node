@@ -1,6 +1,7 @@
 $(document).ready(function() {
   $('#files').change(handleFileSelect);
   //document.getElementById('files').addEventListener('change', handleFileSelect, false);
+  $("input[type=submit]").button().click(function( event ) {event.preventDefault();});
 });
 
 function handleFileSelect(evt) {
@@ -21,4 +22,11 @@ function handleFileSelect(evt) {
         })(f);
         read.readAsText(f);
     }
+}
+
+function toGetAPI(){
+    var hostin = $("#host").val();
+    $.get('/api/',{host:hostin}, function(data){
+        $("#list").text(data);
+    });
 }

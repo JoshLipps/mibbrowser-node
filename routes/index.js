@@ -6,8 +6,9 @@
 var bodystuff =
 '<label for="host">Host</label><input type="text" id="host" name="host" />\n'+
 '<label for="community">Community</label><input type="text" id="community" name="community" />\n'+
+'<input type="submit" value="Poll" onclick="toGetAPI()"/>'+
 '<input type="file" id="files" name="file" />\n'+
-'<div><output id="list"> </output><div>';
+'<div><output id="list"> </output></div>';
 
 var scripts =
 '<script src="/js/getFile.js"></script>\n' +
