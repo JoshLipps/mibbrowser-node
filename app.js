@@ -31,7 +31,7 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/about', about.index);
-app.get('/api', api.cats);
+app.get('/api', api.snmpget);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

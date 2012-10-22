@@ -27,7 +27,11 @@ function handleFileSelect(evt) {
 function toGetAPI(){
     var hostquery = $("#host").val(),
     communityquery = $("#community").val(),
-    oidquery = '.1.3.6.1.4.1.1.2.3.4';
+    oidquery = '.1.3.6.1.2.1.1.3.0';
+
+    //TODO use jquery to find all selected oids
+    //TODO add support for multiple oids
+
     $.get('/api/',{host:hostquery,community:communityquery,oid:oidquery}, function(data){
         $("#list").text(data);
     });
