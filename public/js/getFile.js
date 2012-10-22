@@ -25,8 +25,10 @@ function handleFileSelect(evt) {
 }
 
 function toGetAPI(){
-    var hostin = $("#host").val();
-    $.get('/api/',{host:hostin}, function(data){
+    var hostquery = $("#host").val(),
+    communityquery = $("#community").val(),
+    oidquery = '.1.3.6.1.4.1.1.2.3.4';
+    $.get('/api/',{host:hostquery,community:communityquery,oid:oidquery}, function(data){
         $("#list").text(data);
     });
 }
