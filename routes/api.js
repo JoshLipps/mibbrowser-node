@@ -17,14 +17,12 @@ exports.snmpget = function(req, res){
             console.log('Fail :(');
         } else {
             res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
-            //console.log(varbind.oid) ;
-            //var vb = varbind[0];
             console.log('The system uptime is "' + vb.value + '"');
         }
     });
 
     // The session must be closed when you're done with it.
-    //session.close();
+    session.close();
     //console.log(req.query);
     
 };

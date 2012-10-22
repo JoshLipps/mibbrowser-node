@@ -2,6 +2,7 @@ $(document).ready(function() {
   $('#files').change(handleFileSelect);
   //document.getElementById('files').addEventListener('change', handleFileSelect, false);
   $("input[type=submit]").button().click(function( event ) {event.preventDefault();});
+  $("input[type=file]").button().click(function( event ) {event.preventDefault();});
 });
 
 function handleFileSelect(evt) {
