@@ -22,7 +22,7 @@ exports.snmpget = function(req, res){
     });
 
     // The session must be closed when you're done with it.
-    session.close();
+    //session.close();
     //console.log(req.query);
     
 };
