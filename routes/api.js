@@ -6,6 +6,7 @@
  
 exports.snmpget = function(req, res){
 
+    console.log(req.query);
     var session;
 
     session = new snmp.Session({ host: req.query.host, port: 161, community: req.query.community });
@@ -23,6 +24,5 @@ exports.snmpget = function(req, res){
 
     // The session must be closed when you're done with it.
     session.close();
-    //console.log(req.query);
     
 };
