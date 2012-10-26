@@ -13,12 +13,17 @@ var express = require('express'),
 var app = express();
 
 app.configure(function(){
+  // I guess the following means "use environment supplied port OR 3000"
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
+  // Logs everything:
   app.use(express.logger('dev'));
+  // Parses JSON in POSTs:
   app.use(express.bodyParser());
+  // For use with forms and PUT requests:
   app.use(express.methodOverride());
+  // For later session control implementation:
   //app.use(express.cookieParser('your secret here'));
   ///app.use(express.session());
   app.use(app.router);
