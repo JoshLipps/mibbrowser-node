@@ -14,15 +14,22 @@ footer {
     -webkit-justify-content: space-around;
 
 }
-.inputbox-list > .btn{
-   -webkit-align-self: center; 
+.inputbox-list div{
+   /*-webkit-align-self: center;*/ 
+   display: -webkit-flex;
+    -webkit-flex-flow: column;
 }
 .inputbox-list ul{
 /*    float:left; */
     list-style-type:none; 
 
 }
+.list{
+    overflow-y: auto;
+    overflow-x: hidden; 
+}
 #files {
     display:none;
 }​
+
 
