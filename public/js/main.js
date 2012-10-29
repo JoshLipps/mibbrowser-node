@@ -13,9 +13,13 @@ function handleFileSelect(evt) {
 
     read.onload = (function(theFile) {
         return function(e) {
-            var mib = mibtojson.parse(e.target.result);
-            $("#list").text(mib);
-            console.log(e.target.result);
+            var mib = mibtojson.parse(e.target.result),i;
+            for(i=0;i<mib.length;i++){
+                mib[i] ="<div>"+mib[i]+"</div>";
+            }
+
+            $("#list").append(mib);
+            //console.log(e.target.result);
         };
     }(file));
     read.readAsText(file);
