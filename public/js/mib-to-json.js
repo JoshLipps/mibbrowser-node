@@ -9,17 +9,13 @@
 var mibtojson = (function(){
 	var json = {};
 	function removeComments(mib){
-		var reComment = /-{2}.*$/,
+		var reComment = /[-]{2}.*$/gm,
 			i;
 
 		if(typeof mib === 'undefined'){
 			return {};
 		}
-			
-		for(i=0;i<mib.length;i++){
-			mib[i] = mib[i].replace(reComment);
-			//TODO remove while line in case of full line comment
-		}
+		mib =mib.replace(reComment,'');
 		return mib;
 	}
 	function toJson(mib){
@@ -31,7 +27,7 @@ var mibtojson = (function(){
 
 		parse: function(mib){
 			json = toJson(mib);
-			return JSON.stringify(json); }
+			return json; }
 	};
 }());
 
