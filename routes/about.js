@@ -2,7 +2,7 @@
 //
 // GET Import Page
 //
-$ = require('jquery');
+//$ = require('jquery');
 
 var bodystuff =
 '<div class="hero-unit">\n'+

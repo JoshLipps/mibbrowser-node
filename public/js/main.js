@@ -2,8 +2,8 @@ $(document).ready(function() {
   $('#files').change(handleFileSelect);
   //This is so that filebutton works well
   $('input[id=files]').change(function() {
-     $('#mibfile').val($(this).val());
-  }); 
+     $('#mibfile').val($(this).prop("files.0.name"));
+  });
 });
 
 function handleFileSelect(evt) {
@@ -35,6 +35,6 @@ function toGetAPI(){
     //TODO add support for multiple oids
 
     $.get('/api/',{host:hostquery,community:communityquery,oid:oidquery}, function(data){
-        $("#oiddetails").text(data);
+        $(".oidoutput").text(data);
     });
 }
