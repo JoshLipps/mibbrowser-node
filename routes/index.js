@@ -7,6 +7,7 @@ var bodystuff,scripts;
 
 
 bodystuff =
+<<<<<<< HEAD
 '<div class="well">'+
 '   <div class="inputbox-list">'+
 '       <div>\n'+
@@ -27,6 +28,26 @@ bodystuff =
 '       </div>\n'+
 '   </div>\n'+
 '   <div class="oidoutput"></div>\n'+
+=======
+'<div class="inputbox-list well">'+
+'<div>\n'+
+' 	<label for="host">Host</label>\n'+
+'	<input class="input" type="text" id="host" name="host" value="snmp.yawnneko.com" />\n'+
+'</div>\n'+
+'<div>\n'+
+'	<label for="community">Community</label>\n'+
+'	<input class="input-small" type="text" id="community" name="community" value="cs158b!" />\n'+
+'</div>\n'+
+'<div>\n'+
+'	<label for="oid">OID</label>\n'+
+'	<input class="input" type="text" id="oid" name="oid" value=".1.3.6.1.2.1.1.3.0" />\n'+
+'</div>\n'+
+'<div>\n'+
+'	<label for="poll">Poll</label>\n'+
+'	<input class="btn" type="submit" value="Get" onclick="toGetAPI()" />\n'+
+'</div>\n'+
+'<div class="list"><output id="oiddetails"></output></div>\n'+
+>>>>>>> css
 '</div>\n'+
 '<div class="filebox well"><input type="file" id="files" name="file" />\n'+
 '   <div class="input-append">\n' +

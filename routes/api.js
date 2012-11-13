@@ -13,10 +13,9 @@ exports.snmpget = function(req, res){
     //var requestedOid = req.query.oid.split(/\./g);
     //requestedOid.shift();
 
-    console.log("requestedOid: " + requestedOid);
+    //console.log("requestedOid: " + requestedOid);
 
     session = new snmp.Session({ host: req.query.host, port: 161, community: req.query.community });
-    //session = new snmp.Session({ host: "snmp.yawnneko.com", port: 161, community: "cs158b!" });
     
     // TODO: Make this work!
     //session.get({ oid: requestedOid }, function (error, varbind) {
@@ -26,7 +25,7 @@ exports.snmpget = function(req, res){
             console.log('Fail :('); // lawl
         } else {
             res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
-            console.log('The system uptime is "' + vb.value + '"');
+            console.log('The system uptime is "' + vb.value + '" (oid: ' + vb.oid + ')');
         }
     });
 
