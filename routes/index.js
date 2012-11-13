@@ -24,6 +24,7 @@ bodystuff =
 '	<label for="poll">Poll</label>\n'+
 '	<input class="btn" type="submit" value="Get" onclick="toGetAPI()" />\n'+
 '</div>\n'+
+'<div class="list"><output id="oiddetails"></output></div>\n'+
 '</div>\n'+
 '<div class="filebox well"><input type="file" id="files" name="file" />\n'+
 '	<div class="input-append">\n' +
