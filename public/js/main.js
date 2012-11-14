@@ -6,6 +6,7 @@ $(document).ready(function() {
   });
 });
 
+//event handler for file button
 function handleFileSelect(evt) {
     var files = evt.target.files, // FileList object
     file = files[0],
@@ -25,6 +26,7 @@ function handleFileSelect(evt) {
     read.readAsText(file);
 }
 
+//
 function toGetAPI(){
     var hostquery = $("#host").val(),
     communityquery = $("#community").val(),
@@ -32,7 +34,7 @@ function toGetAPI(){
 
     //TODO use jquery to find all selected oids
     //TODO add support for multiple oids
-
+    //TODO add multipule command support
     $.get('/api/',{host:hostquery,community:communityquery,oid:oidquery}, function(data){
         $(".oidoutput").text(data);
     });
