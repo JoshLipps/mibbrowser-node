@@ -1,3 +1,0 @@
-/$[A-Za-z].*::= .*}\n\n/ //try to grab explicitly
-
-/::- BEGIN .*\n(^[A-za-z])|::-.*}\n(?=^\n)/
