@@ -6,6 +6,8 @@
 var express = require('express'),
    routes = require('./routes'),
    about = require('./routes/about'),
+   alarms = require('./routes/alarms'),
+   devices = require('./routes/devices'),
    api = require('./routes/api'),
    http = require('http'),
    path = require('path');
@@ -36,6 +38,8 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/about', about.index);
+app.get('/alarms', alarms.index);
+app.get('/devices', devices.index);
 app.get('/api', api.snmpget);
 
 http.createServer(app).listen(app.get('port'), function(){

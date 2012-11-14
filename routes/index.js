@@ -42,7 +42,7 @@ scripts =
 
 exports.index = function(req, res){
   res.render('index', {
-    title: 'Node MIB Browser',
+    title: 'Node NMS',
     script:scripts,
     body: bodystuff
     });
