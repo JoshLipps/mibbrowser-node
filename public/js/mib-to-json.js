@@ -9,9 +9,7 @@
 var mibtojson = (function(){
 	var json = {};
 	function removeComments(mib){
-		var reComment = /[-]{2}.*$/gm,
-			i;
-
+		var reComment = /[-]{2}.*$/gm;
 		mib = mib.replace(reComment,'');
 		return mib;
 	}
