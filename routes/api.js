@@ -9,17 +9,12 @@ exports.snmpget = function(req, res){
     console.log(req.query);
     var session,
     requestedOid = req.query.oid;
-    //Commented out because we are spliting but lib can do this for us.
-    //var requestedOid = req.query.oid.split(/\./g);
-    //requestedOid.shift();
 
     //console.log("requestedOid: " + requestedOid);
 
     session = new snmp.Session({ host: req.query.host, port: 161, community: req.query.community });
     
-    // TODO: Make this work!
-    //session.get({ oid: requestedOid }, function (error, varbind) {
-    session.get({ oid: requestedOid}, function (error, varbind) {
+    session.get({oid: requestedOid}, function (error, varbind) {
         var vb = varbind[0];
         if (error) {
             console.log('Fail :('); // lawl

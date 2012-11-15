@@ -1,0 +1,12 @@
+Mongo "schema".txt
+events
+    seqnumber: key
+    device
+    alarmname
+    state
+    description
+    datestamp
+
+device
+    hostname: key
+    config
