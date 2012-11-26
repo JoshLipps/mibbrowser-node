@@ -10,7 +10,9 @@ var express = require('express'),
    api = require('./routes/api'),
    http = require('http'),
    path = require('path'),
-   db = require('mongodb');
+   db = require('mongodb'),
+   mongoUri = process.env.MONGOLAB_URI; //mongoUri is derived from heroku's env Variable
+
 
 var app = express();
 
