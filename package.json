@@ -14,7 +14,8 @@
     "express": "3.0.0rc4",
     "ejs": "*",
     "snmp-native": "*",
-    "jquery": "1.7.3"
+    "jquery": "1.7.3",
+    "mongodb":"*"
   },
   "devDependencies": {
     "vows": "0.6.4"
