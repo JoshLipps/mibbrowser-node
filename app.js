@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -10,7 +9,8 @@ var express = require('express'),
    devices = require('./routes/devices'),
    api = require('./routes/api'),
    http = require('http'),
-   path = require('path');
+   path = require('path'),
+   db = require('mongodb');
 
 var app = express();
 
