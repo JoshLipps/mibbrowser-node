@@ -13,17 +13,43 @@ exports.snmpget = function(req, res){
     //console.log("requestedOid: " + requestedOid);
 
     session = new snmp.Session({ host: req.query.host, port: 161, community: req.query.community });
-    
-    session.get({oid: requestedOid}, function (error, varbind) {
-        var vb = varbind[0];
-        if (error) {
-            console.log('Fail :('); // lawl
-        } else {
-            res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
-            console.log('The system uptime is "' + vb.value + '" (oid: ' + vb.oid + ')');
-        }
-    });
+    if(req.query.action =="get"){
 
+        session.get({oid: requestedOid}, function (error, varbind) {
+            var vb = varbind[0];
+            if (error) {
+                console.log('Fail :('); // lawl
+            } else {
+                res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
+                console.log('The system response is "' + vb.value + '" (oid: ' + vb.oid + ')');
+            }
+        });
+    }
+    else if(req.query.action =="getnext"){
+        session.getNext({oid: requestedOid}, function (error, varbind) {
+            var vb = varbind[0];
+            if (error) {
+                console.log('Fail :('); // lawl
+            } else {
+                res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
+                console.log('The system response is  "' + vb.value + '" (oid: ' + vb.oid + ')');
+            }
+        });
+    }
+     else if(req.query.action =="getSubtree"){
+        session.getsubtree({oid: requestedOid}, function (error, varbind) {
+            var vb = varbind[0];
+            if (error) {
+                console.log('Fail :('); // lawl
+            } else {
+                res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
+                console.log('The system response is "' + vb.value + '" (oid: ' + vb.oid + ')');
+            }
+        });
+    }
+    else{
+        res.send("Translated");
+    }
     // The session must be closed when you're done with it.
     //session.close();
     

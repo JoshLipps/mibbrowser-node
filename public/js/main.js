@@ -27,12 +27,13 @@ function handleFileSelect(evt) {
 function toGetAPI(){
     var hostquery = $("#host").val(),
     communityquery = $("#community").val(),
-    oidquery = $("#oid").val();
+    oidquery = $("#oid").val(),
+    actionquery=$("#action").val();
 
     //TODO use jquery to find all selected oids
     //TODO add support for multiple oids
     //TODO add multipule command support
-    $.get('/api/',{host:hostquery,community:communityquery,oid:oidquery}, function(data){
+    $.get('/api/',{host:hostquery,community:communityquery,oid:oidquery,action:actionquery}, function(data){
         $(".oidoutput").prepend("<p>"+data+"</p>");//append oid get commands
     });
 }
