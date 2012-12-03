@@ -1,9 +1,9 @@
 $(document).ready(function() {
-  $('#files').change(handleFileSelect);
+  //$('#files').change(handleFileSelect);
   //This is so that filebutton works well
-  $('input[id=files]').change(function() {
-     $('#mibfile').val($(this).prop("files.0.name"));
-  });
+  //$('input[id=files]').change(function() {
+  //   $('#mibfile').val($(this).prop("files.0.name"));
+  //});
 });
 
 //event handler for file button
@@ -36,6 +36,6 @@ function toGetAPI(){
     //TODO add support for multiple oids
     //TODO add multipule command support
     $.get('/api/',{host:hostquery,community:communityquery,oid:oidquery}, function(data){
-        $(".oidoutput").text(data);
+        $(".oidoutput").prepend("<p>"+data+"</p>");//append oid get commands
     });
 }

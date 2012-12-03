@@ -1,31 +1,39 @@
 <% include header.ejs %>
 <div class="well">
-   <div class="inputbox-list">
-       <div>
-           <label for="host">Host</label>
-           <input class="input" type="text" id="host" name="host" value="snmp.yawnneko.com" />
-       </div>
-       <div>
-           <label for="community">Community</label>
-           <input class="input-small" type="text" id="community" name="community" value="cs158b!" />
-       </div>
-       <div>
-           <label for="oid">OID</label>
-           <input class="input" type="text" id="oid" name="oid" value=".1.3.6.1.2.1.1.3.0" />
-       </div>
-       <div>
-           <label for="poll">Poll</label>
-           <input class="btn" type="submit" value="Get" onclick="toGetAPI()" />
-       </div>
-   </div>
-   <div class="oidoutput"></div>
-</div>
-<div class="filebox well"><input type="file" id="files" name="file" />
-   <div class="input-append">
-       <input id="mibfile" class="input" type="text">
-       <a class="btn" onclick="$(\'input[id=files]\').click();">Browse</a>
-   </div>
-   <div class="list"><output id="list"> </output></div>
-</div>
+  <div class="inputbox-list">
+      <div>
+        <label for="host">Host</label>
+        <input class="input" type="text" id="host" name="host" value="snmp.yawnneko.com" />
+      </div>
+      <div>
+        <label for="community">Community</label>
+        <input class="input-small" type="text" id="community" name="community" value="cs158b!" />
+      </div>
+      <div>
+        <label for="oid">OID</label>
+        <input class="input" type="text" id="oid" name="oid" value=".1.3.6.1.2.1.1.3.0" />
+      </div>
+      <div>
+        <label for="action">Action</label>
+        <select id="action">
+          <option>Get</option>
+          <option>Get Next</option>
+          <option>Walk</option>
+        </select>      
+      </div>
+      <div>
+        <label for="poll">Poll</label>
+        <input class="btn" type="submit" value="Go" onclick="toGetAPI()" />
+      </div>
+   </div> 
+  </div>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span5 well mibtree"></div>
+    <div class="span7 well oidoutput"></div>
+  </div>
+</div> 
+
+
 <% include footer.ejs %>
 

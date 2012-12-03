@@ -24,6 +24,14 @@ footer {
     list-style-type:none; 
 
 }
+.mibtree{
+  overflow: auto;
+  height: 475px;
+}
+.oidoutput{
+  height: 475px;
+  overflow: auto;
+}
 .list{
     overflow-y: auto;
     overflow-x: hidden; 
@@ -38,7 +46,7 @@ footer {
 }
 .bs-docs-sidenav > li > a {
   display: block;
-  width: 190px \9;
+  width: 190px;
   margin: 0 0 -1px;
   padding: 8px 14px;
   border: 1px solid #e5e5e5;
