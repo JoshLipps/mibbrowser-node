@@ -1,7 +1,6 @@
 $(document).ready(function() {
     displayMib2();
-    //$('.pad1').collapse();
-    //$().toggle
+    //$().toggleclass();
 });
 
 //event handler for file button
@@ -37,6 +36,10 @@ function toGetAPI(){
         $(".oidoutput").prepend("<p>"+data+"</p>");//append oid get commands
     });
 }
+function oidclick(elem){
+    console.log('The ID of the element which triggered this is: ' + elem.id);
+    $("#oid").val("."+elem.id);
+}
 
 function displayMib2(){
     $.get('/api/mib2',function(data){
@@ -49,10 +52,10 @@ function printOID(ou){
      //console.log();
      var pad = ou.oid.split(".").length;
      if(ou.children.length>0){
-        $('.mibtree').append('<div class ="pad'+ pad +'">'+'<i class="icon-plus"/> '+ ou.name);
+        $('.mibtree').append('<div id="'+ou.oid+'" onclick="oidclick(this)" class ="pad'+ pad +'">'+'<i class="icon-plus"/> '+ ou.name);
      }
      else
-        $('.mibtree').append('<div class ="pad'+ pad +'">'+'<i class="icon-leaf"/> '+ ou.name);
+        $('.mibtree').append('<div id="'+ou.oid+'" onclick="oidclick(this)" class ="pad'+ pad +'">'+'<i class="icon-leaf"/> '+ ou.name);
      
      ou.children.forEach(function(element,index,array){if(element){printOID(element);}});
      $('.mibtree').append("</div>");

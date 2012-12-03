@@ -36,16 +36,21 @@ exports.snmpget = function(req, res){
             }
         });
     }
-     else if(req.query.action =="getSubtree"){
-        session.getsubtree({oid: requestedOid}, function (error, varbind) {
-            var vb = varbind[0];
+     else if(req.query.action =="getsubtree"){
+        session.getSubtree({oid: requestedOid}, function (error, varbind) {
+            var response ="";
             if (error) {
                 console.log('Fail :('); // lawl
             } else {
-                res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
-                console.log('The system response is "' + vb.value + '" (oid: ' + vb.oid + ')');
+                varbind.forEach(function (vb) {
+
+                    response += '<p>'+ vb.oid + ' = ' + vb.value + ' (' + vb.type + ')'+'</p>';
+                    console.log(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
+                });
+                res.send(response);
             }
         });
+        
     }
     else{
         res.send("Translated");
