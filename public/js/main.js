@@ -58,11 +58,11 @@ function printOID(ou){
         $('.mibtree').append('<div id="'+ou.oid+'" onclick="oidclick(this)" class ="pad'+ pad +'">'+'<i class="icon-plus"/> '+ ou.name);
      }
      else
-        $('.mibtree').append('<div id="'+ou.oid+'" onclick="oidclick(this)" class ="pad'+ pad +'">'+'<i class="icon-leaf"/> '+ ou.name);
+        $('.mibtree').append('<div id="'+ou.oid+'.0" onclick="oidclick(this)" class ="pad'+ pad +'">'+'<i class="icon-leaf"/> '+ ou.name);
      
      ou.children.forEach(function(element,index,array){if(element){printOID(element);}});
      $('.mibtree').append("</div>");
 }
-function jq(myid) { 
+function jq(myid) {
    return '#' + myid.replace(/(:|\.)/g,'\\$1');
 }
