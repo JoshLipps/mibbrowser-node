@@ -37,8 +37,11 @@ function toGetAPI(){
     });
 }
 function oidclick(elem){
-    console.log('The ID of the element which triggered this is: ' + elem.id);
+    //console.log('The ID of the element which triggered this is: #' + elem.id);
     $("#oid").val("."+elem.id);
+    $(".active").toggleClass("active");
+    $(jq(elem.id)).toggleClass("active");
+    //$("#1.3").toggleClass("active");
 }
 
 function displayMib2(){
@@ -59,4 +62,7 @@ function printOID(ou){
      
      ou.children.forEach(function(element,index,array){if(element){printOID(element);}});
      $('.mibtree').append("</div>");
+}
+function jq(myid) { 
+   return '#' + myid.replace(/(:|\.)/g,'\\$1');
 }
