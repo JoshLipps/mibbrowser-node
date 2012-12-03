@@ -53,7 +53,7 @@ exports.snmpget = function(req, res){
         
     }
     else{
-        res.send("Translated");
+        res.send("Oid is "+ requestedOid);
     }
     // The session must be closed when you're done with it.
     //session.close();
