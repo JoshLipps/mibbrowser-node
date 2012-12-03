@@ -2,8 +2,8 @@
 /*
  * GET home page.
  */
- var snmp = require('snmp-native');
- 
+ var snmp = require('snmp-native'),
+ mib2 = require('./mib2');
 exports.snmpget = function(req, res){
 
     console.log(req.query);
@@ -27,4 +27,7 @@ exports.snmpget = function(req, res){
     // The session must be closed when you're done with it.
     //session.close();
     
+};
+exports.mib2 = function(req,res){
+    res.send(mib2);
 };

@@ -43,6 +43,7 @@ app.get('/about', about.index);
 app.get('/alarms', alarms.index);
 app.get('/devices', devices.index);
 app.get('/api', api.snmpget);
+app.get('/api/mib2', api.mib2);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
