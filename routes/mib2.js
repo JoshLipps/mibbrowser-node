@@ -1,12 +1,12 @@
 exports.mib2 = {
-  "name": "iso",
+  "name": "iso(1)",
   "oid": "1",
   "children": [
     null,
     null,
     null,
     {
-      "name": "identified-organization",
+      "name": "identified-organization(3)",
       "oid": "1.3",
       "children": [
         null,

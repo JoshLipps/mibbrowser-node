@@ -71,8 +71,28 @@ footer {
      -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
           box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
 }
-#files {
-    display:none;
-}​
+.pad2{
+  padding-left: 1em;
+}
+.pad3{
+  padding-left: 2em;
+}
+.pad4{
+  padding-left: 3em;
+}
+.pad5{
+  padding-left: 5em;
+}
+.pad6{
+  padding-left: 6em;
+}
+.pad7{
+  padding-left: 7em;
+}
+.pad8{
+  padding-left: 8em;
+}
+
+
 
 

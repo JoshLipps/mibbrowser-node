@@ -1,9 +1,7 @@
 $(document).ready(function() {
-  //$('#files').change(handleFileSelect);
-  //This is so that filebutton works well
-  //$('input[id=files]').change(function() {
-  //   $('#mibfile').val($(this).prop("files.0.name"));
-  //});
+    displayMib2();
+    //$('.pad1').collapse();
+    //$().toggle
 });
 
 //event handler for file button
@@ -26,7 +24,6 @@ function handleFileSelect(evt) {
     read.readAsText(file);
 }
 
-//
 function toGetAPI(){
     var hostquery = $("#host").val(),
     communityquery = $("#community").val(),
@@ -38,4 +35,24 @@ function toGetAPI(){
     $.get('/api/',{host:hostquery,community:communityquery,oid:oidquery}, function(data){
         $(".oidoutput").prepend("<p>"+data+"</p>");//append oid get commands
     });
+}
+
+function displayMib2(){
+    $.get('/api/mib2',function(data){
+                    printOID(data.mib2);
+    });
+}
+
+function printOID(ou){
+     //console.log(JSON.stringify(ou.children));
+     //console.log();
+     var pad = ou.oid.split(".").length;
+     if(ou.children.length>0){
+        $('.mibtree').append('<div class ="pad'+ pad +'">'+'<i class="icon-plus"/> '+ ou.name);
+     }
+     else
+        $('.mibtree').append('<div class ="pad'+ pad +'">'+'<i class="icon-leaf"/> '+ ou.name);
+     
+     ou.children.forEach(function(element,index,array){if(element){printOID(element);}});
+     $('.mibtree').append("</div>");
 }
