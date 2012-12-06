@@ -12,6 +12,7 @@ mb.events: {
 
 mb.devices: {
     hostname: key,
+    community,
     alarms: [
         {
             oid,
