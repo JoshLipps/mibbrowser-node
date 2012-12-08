@@ -65,5 +65,14 @@ exports.mib2 = function(req,res){
 
 
 exports.events = function(req,res,db){
+};
     
+exports.getHosts = function(req,res) {
+    var hosts;
+    var MongoClient = require('mongodb').MongoClient;
+    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+        if(!err) { console.log("We are connected"); }
+        hosts = db.mb.devices.find({}, { hostname: 1});
+    });
+    console.log(hosts);
 };

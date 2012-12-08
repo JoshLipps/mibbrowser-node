@@ -1,12 +1,24 @@
 Mongo "schema".txt
-events
-    seqnumber: key
-    device
-    alarmname
-    state
-    description
-    datestamp
 
-device
-    hostname: key
-    config
+
+mb.events: {
+    seqnumber: key,
+    device:    mb.devices.hostname,
+    alarmname: mb.devices.alarms.oid,
+    state,
+    description,
+    datestamp
+}
+
+mb.devices: {
+    hostname: key,
+    community,
+    alarms: [
+        {
+            oid,
+            error,
+            warn,
+            clear
+        }
+    ]
+}
