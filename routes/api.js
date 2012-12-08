@@ -62,3 +62,8 @@ exports.snmpget = function(req, res){
 exports.mib2 = function(req,res){
     res.send(mib2);
 };
+
+
+exports.events = function(req,res,db){
+    
+};
