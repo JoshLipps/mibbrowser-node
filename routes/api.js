@@ -68,11 +68,15 @@ exports.events = function(req,res,db){
 };
     
 exports.getHosts = function(req,res) {
-    var hosts;
+    var hosts="";
     var MongoClient = require('mongodb').MongoClient;
+    //console.log(process.env.MONGOLAB_URI);
+
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
         if(!err) { console.log("We are connected"); }
-        hosts = db.mb.devices.find({}, { hostname: 1});
+        db.collection("mb.devices").find({},{hostname: 1}).toArray(function(err, docs) {
+                res.send(docs);
+                db.close();
+        });
     });
-    console.log(hosts);
 };

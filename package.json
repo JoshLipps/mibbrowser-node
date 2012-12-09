@@ -15,7 +15,7 @@
     "ejs": "*",
     "snmp-native": "*",
     "jquery": "1.7.3",
-    "mongodb": "1.2.0",
+    "mongodb": "1.2.2",
     "rickshaw": "1.1.2"
   },
   "devDependencies": {
