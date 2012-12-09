@@ -37,10 +37,13 @@ Install
 TODO
 ----
 1. Frontend
-	a. Add host, community input fields
-	b. Present JSON translated MIB tree
-	c. Prettify Displayed MIB (expand collapse)
-2. Parse
-	a. Parse MIB to JSON
+	a. Alarms page - links to device page 
+	b. Alarms page - updates live 
+    c. Alarms page - add filter
+	d. Devices page - pull from db 
+        i. graph datas
+	e. Devices page - configure a device
+        i. add a new device
+        ii. add oid for tracking (thresholds)
 3. Backend
-	a. AJAX node-snmp-native queries
+	a. worker loop to watch tracked oids loop
