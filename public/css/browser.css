@@ -1,0 +1,60 @@
+.inputbox-list {
+    display:-webkit-flex;
+    -webkit-flex-flow: row wrap;
+    -webkit-justify-content: space-around;
+
+}
+.inputbox-list div{
+   /*-webkit-align-self: center;*/ 
+   display: -webkit-flex;
+    -webkit-flex-flow: column;
+}
+.inputbox-list ul{
+/*    float:left; */
+    list-style-type:none; 
+
+}
+.mibtree{
+  overflow: auto;
+  height: 475px;
+}
+.oidoutput{
+  height: 475px;
+  overflow: auto;
+}
+.list{
+    overflow-y: auto;
+    overflow-x: hidden; 
+}
+.pad2{
+  padding-left: 1em;
+}
+.pad3{
+  padding-left: 2em;
+}
+.pad4{
+  padding-left: 3em;
+}
+.pad5{
+  padding-left: 5em;
+}
+.pad6{
+  padding-left: 6em;
+}
+.pad7{
+  padding-left: 7em;
+}
+.pad8{
+  padding-left: 8em;
+}
+.active{
+  border: 1px solid #0044cc;
+  background: #0044cc;
+   -webkit-border-radius: 6px;
+   -moz-border-radius: 6px;
+   border-radius: 6px;
+   color: #FFFFFF;
+}
+
+
+
