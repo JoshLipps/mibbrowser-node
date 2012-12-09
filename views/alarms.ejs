@@ -8,7 +8,7 @@
            <td>Alarm Name</td>
            <td>State</td>
            <td>Error Description</td>
-           <td><Date</td>
+           <td>Date</td>
        </tr>
    </thead>
    <tbody>
@@ -16,6 +16,7 @@
           <tr class="<%= events[i].state %>" >
             <td> <%=events[i].device %> </td>
             <td> <%=events[i].alarmname %> </td>
+            <td> <%=events[i].state %> </td>
             <td> <%=events[i].description %> </td>
             <td> <%=events[i].datestamp %> </td> </tr>
        <% } %>
