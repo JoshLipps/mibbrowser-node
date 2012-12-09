@@ -45,5 +45,5 @@ TODO
 	e. Devices page - configure a device
         i. add a new device
         ii. add oid for tracking (thresholds)
-3. Backend
+2. Backend
 	a. worker loop to watch tracked oids loop

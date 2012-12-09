@@ -16,9 +16,25 @@ mb.devices: {
     alarms: [
         {
             oid,
+            oidname,
+            errormsg,
             error,
             warn,
-            clear
+            warnmsg
+            clear,
+            clearmsg,
+            currentState
         }
-    ]
+    ],
+
+}
+
+mb.poll{
+    deviceID:50c037457570dcd8c9411823,
+    oid
+    }
+mb.history: {
+    hostname,
+    oid,
+    date
 }
