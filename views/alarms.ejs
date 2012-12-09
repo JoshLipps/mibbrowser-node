@@ -1,3 +1,4 @@
+
 <% include header.ejs %>
 
 <table class="table table-hover table-condensed">
@@ -7,70 +8,17 @@
            <td>Alarm Name</td>
            <td>State</td>
            <td>Error Description</td>
+           <td><Date</td>
        </tr>
    </thead>
    <tbody>
-       <tr class="success">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Clear</td>
-           <td>Uptime is &gt3 Minutes</td>
-       <tr class="warning">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Warning</td>
-           <td>Uptime is &gt1 Minute</td>
-       <tr class="error">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Error</td>
-           <td>Uptime is &lt1 Minute</td>
-       <tr class="success">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Clear</td>
-           <td>Uptime is &gt3 Minutes</td>
-       <tr class="warning">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Warning</td>
-           <td>Uptime is &gt1 Minute</td>
-       <tr class="error">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Error</td>
-           <td>Uptime is &lt1 Minute</td>
-       <tr class="success">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Clear</td>
-           <td>Uptime is &gt3 Minutes</td>
-       <tr class="warning">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Warning</td>
-           <td>Uptime is &gt1 Minute</td>
-       <tr class="error">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Error</td>
-           <td>Uptime is &lt1 Minute</td>
-       <tr class="success">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Clear</td>
-           <td>Uptime is &gt3 Minutes</td>
-       <tr class="warning">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Warning</td>
-           <td>Uptime is &gt1 Minute</td>
-       <tr class="error">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Error</td>
-           <td>Uptime is &lt1 Minute</td>
-       </tr>
+       <% for(var i=0; i<events.length; i++) {%>
+          <tr class="<%= events[i].state %>" >
+            <td> <%=events[i].device %> </td>
+            <td> <%=events[i].alarmname %> </td>
+            <td> <%=events[i].description %> </td>
+            <td> <%=events[i].datestamp %> </td> </tr>
+       <% } %>
    </tbody>
 </table>
 

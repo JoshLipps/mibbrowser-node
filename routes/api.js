@@ -63,12 +63,7 @@ exports.mib2 = function(req,res){
     res.send(mib2);
 };
 
-
-exports.events = function(req,res,db){
-};
-    
 exports.getHosts = function(req,res) {
-    var hosts="";
     var MongoClient = require('mongodb').MongoClient;
     //console.log(process.env.MONGOLAB_URI);
 
@@ -80,3 +75,15 @@ exports.getHosts = function(req,res) {
         });
     });
 };
+
+exports.getEvents = function(req,res) {
+    var MongoClient = require('mongodb').MongoClient;
+    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+        if(!err) { console.log("We are connected"); }
+        db.collection("mb.events").find({},{}).toArray(function(err, docs) {
+                res.send(docs);
+                db.close();
+        });
+    });
+};
+
