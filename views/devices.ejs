@@ -5,43 +5,31 @@
     <div class="span3 bs-docs-sidebar">
         <!--Sidebar content-->
         <ul class="nav nav-list bs-docs-sidenav affix-top">
-            <li class="active"><a href="#snmp">snmp.yawnneko.com<i class="icon-chevron-right"></i></a> </li>
-            <li class=""><a href="#loki"> loki.yawnneko.com<i class="icon-chevron-right"></i></a> </li>
-            <li class=""><a href="#openwrt">openwrt.yawnneko.com<i class="icon-chevron-right"></i></a></li>
+            <% for(var i=0; i<devices.length; i++) { %>
+              <% if(i===0){ %>
+                <li class="active" onclick="activeclick(this)" id="<%=devices[i].hostname%>">
+                  <a href="#"><%= devices[i].hostname %> 
+                      <i class="icon-wrench" onclick=''></i> 
+                  </a> 
+                </li>
+              <% } else{ %>
+                <li class="" onclick="activeclick(this)" id="<%=devices[i].hostname%>"><a href="#"><%= devices[i].hostname %><i class="icon-wrench"></i></a> </li>
+              <% } %>
+            <% } %>
        </ul>
     </div>
-    <div class="span9"><div class="well">
-      <!--Body content-->
-        Item 1<br>
-        Item 2<br>
-        Graph<br>
-    </div>
-<div class="well"><table class="table table-hover table-condensed">
-   <thead>
-       <tr class="success">
-           <td>Device</td>
-           <td>Alarm Name</td>
-           <td>State</td>
-           <td>Error Description</td>
-       </tr>
-   </thead>
-   <tbody>
-       <tr class="success">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Clear</td>
-           <td>Uptime is &gt3 Minutes</td>
-       <tr class="warning">
-           <td>snmp.yawnneko.com</td>
-           <td>Uptime</td>
-           <td>Warning</td>
-           <td>Uptime is &gt1 Minute</td>
-       <tr class="error">
-   </tbody>
-</table>
-    </div>
+    <div class="span9">
+      <div class="well">
+        <!--Body content-->
+        <div class="graphs">
+        </div>
+      </div>
+      <div class="well">
+        <% include alarm.ejs %>
+      </div>
     </div>
   </div>
 </div>
 
+<% include config.ejs %>
 <% include footer.ejs %>

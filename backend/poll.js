@@ -6,29 +6,31 @@ exports.go = function(){
     //for poll collection poll and dump response in history collection
     var MongoClient = require('mongodb').MongoClient;
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        if(err) { console.log("DB connection error - polling"); }
+        if(err) { console.log("DB connection error - polling"); db.close(); }
+        else{
 
-        //find all devices to be polled
-        db.collection("mb.poll").find({},{}).each(function(err,poll) {
-            var BSON= require('mongodb').BSONPure,obj_id;
-            if(err) { console.log("DB connection error - polling"); }
-            if(poll){
-                //console.log(poll.deviceID);
-                obj_id = BSON.ObjectID.createFromHexString(poll.deviceID);
-                
-                //grab device from device table
-                db.collection("mb.devices").findOne(obj_id,function(err,device){
-                    //poll device
-                    snmps(device.hostname,device.port,device.community,'get',poll.oid,function(value){
-                        //console.log(value);
-                        logHistory(device.hostname,poll.oid,value);
-                        //eventCheck(value,device,poll.oid);
+            //find all devices to be polled
+            db.collection("mb.poll").find({},{}).each(function(err,poll) {
+                var BSON= require('mongodb').BSONPure,obj_id;
+                if(err) { console.log("DB connection error - find(poll)"); }
+                if(poll){
+                    //console.log(poll.deviceID);
+                    obj_id = BSON.ObjectID.createFromHexString(poll.deviceID);
+                    
+                    //grab device from device table
+                    db.collection("mb.devices").findOne(obj_id,function(err,device){
+                        //poll device
+                        snmps(device.hostname,device.port,device.community,'get',poll.oid,function(value){
+                            //console.log(value);
+                            logHistory(device.hostname,poll.oid,value);
+                            //eventCheck(value,device,poll.oid);
+                        })
                     })
-                })
-            } else{
-            //db.close();
-            }
-        });
+                } else{
+                //db.close();
+                }
+            });
+        }
         
     });
     //check for event conditions
@@ -48,7 +50,10 @@ function logHistory(name,oid,value){
     var MongoClient = require('mongodb').MongoClient;
     //insert unsorted poll data to history collection
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-    db.collection('mb.history').insert({hostname:name,oid:oid,date:time.getTime(),response:value},{w:1},function(){db.close()});
+    if(err){console.log("logHistory db fail")} 
+    else{
+        db.collection('mb.history').insert({hostname:name,oid:oid,date:time.getTime(),response:value},{w:1},function(){db.close()});
+    }
     });
 }
 //exports.snmp = snmps;
