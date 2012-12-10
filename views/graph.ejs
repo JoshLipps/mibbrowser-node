@@ -1,19 +1,17 @@
-<% include header.ejs %>
-
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
-      i = 2004;
+      i = 0;
       setInterval('updateChart()', 5000 );
       function drawChart() {
         data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales'],
-          ['2004',  0],
+          ['Time', 'Value'],
+          ['0',  0],
         ]);
 
         options = {
-          title: 'Company Performance'
+          title: 'Device Performance'
         };
 
         chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -25,5 +23,3 @@
       }
     </script>
     <div id="chart_div" style="width: 900px; height: 500px;"></div>
-
-<% include footer.ejs %>

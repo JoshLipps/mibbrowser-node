@@ -93,7 +93,7 @@ exports.getHistory = function(req,res) {
     var MongoClient = require('mongodb').MongoClient;
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
         if(!err) { console.log("We are connected"); }
-        db.collection("mb.history").find({hostname:req.query.hostname,oid:req.query.oid}).toArray(function(err, docs) {
+        db.collection("mb.history").find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':10}).toArray(function(err, docs) {
                 res.send(docs);
                 db.close();
         });
