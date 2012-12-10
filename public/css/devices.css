@@ -46,3 +46,6 @@ margin-top: 2px;
 margin-right: -6px;
 opacity: .25;
 }
+.modal {
+  width: 700px;
+}
