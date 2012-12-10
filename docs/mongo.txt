@@ -29,13 +29,19 @@ mb.devices: {
 
 }
 
-mb.poll{
+mb.poll: {
     deviceID:50c037457570dcd8c9411823,
     oid
-    }
+}
+
 mb.history: {
     hostname,
     oid,
     date,
     response
+}
+
+mb.supportedOids: {
+    name,
+    oid
 }
