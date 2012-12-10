@@ -62,7 +62,10 @@ exports.snmpget = function(req, res){
 exports.mib2 = function(req,res){
     res.send(mib2);
 };
-
+exports.postHost = function(req, res) {
+    //var name = req.body.name
+    
+};
 exports.getHost = function(req,res) {
     var MongoClient = require('mongodb').MongoClient;
 

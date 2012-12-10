@@ -23,7 +23,7 @@ exports.go = function(){
                         snmps(device.hostname,device.port,device.community,'get',poll.oid,function(value){
                             //console.log(value);
                             logHistory(device.hostname,poll.oid,value);
-                            //eventCheck(value,device,poll.oid);
+                            eventCheck(value,device,poll.oid);
                         })
                     })
                 } else{
@@ -37,12 +37,47 @@ exports.go = function(){
 
 };
 
-//checks to see if this event requires new event
-function eventCheck(name,oid,value){
-    var time = new Date();
+
+function updateState(name,oid,state){
+    
+
+
+}
+function createEvent(name,oid,state,msg){
+    console.log("createEvent");
     var MongoClient = require('mongodb').MongoClient;
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        db.collection('mb.history').insert({hostname:name,oid:oid,date:time.getTime()});
+        var time = new Date();
+        db.collection('mb.events').insert({device:name,alarmname:oid,state:state,description:msg,datestamp:time},function(){db.close()});
+    });
+}
+
+//checks to see if this event requires new event
+function eventCheck(name,oid,value){
+    //var time = new Date();
+    var MongoClient = require('mongodb').MongoClient;
+    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+        db.collection('mb.devices').findOne({hostname:name},function(err,host){
+            for(var i=0;i<host.alarms.length;i++){
+                if(oid===host.alarms[i]){
+                    console.log("Event Check - Oid found ");
+                    if(value<host.alarms[i].error)
+                    {
+                        //updateState(name,oid,"error");
+                        //db.collection('mb.devices').update()
+                        createEvent(name,oid,'error',host.alarms[i].errormsg);
+                    }else if(value<host.alarms[i].warn){
+                        //updateState(name,oid,"warn");
+                        createEvent(name,oid,'warn',host.alarms[i].warnmsg);
+                    }
+                    else if(value>host.alarms[i].clear && host.alarms[i].state!=="clear"){
+                        //updateState(name,oid,"clear");
+                        createEvent(name,oid,'success',host.alarms[i].clearmsg);
+                    }
+                    db.close();
+                }
+            }
+        });
     });
 }
 function logHistory(name,oid,value){
