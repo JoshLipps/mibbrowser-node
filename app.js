@@ -11,7 +11,8 @@ var express = require('express'),
    http = require('http'),
    path = require('path'),
    db = require('mongodb'),
-   poll = require('backend/poll'),
+  // backend = require('./backend'),
+   poll = require('./backend/poll'),
    loop = {},
    mongoUri = process.env.MONGOLAB_URI; //mongoUri is derived from heroku's env Variable
 
@@ -54,7 +55,7 @@ app.get('/api/hosts', api.getHosts);
 loop = setInterval(function(){
   var time = new Date();
   console.log("Interval " + time.toString());
-  poll.now();
+  poll.go();
 }, 15000);
 //setInterval(callback, delay, [arg], [...])#
 //To schedule the repeated execution of callback every delay milliseconds. Returns a intervalId for possible use with clearInterval(). Optionally you can also pass arguments to the callback.
