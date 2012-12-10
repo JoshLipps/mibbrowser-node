@@ -70,7 +70,7 @@ function jq(myid) {
 function postHost() {
     var postData;
     $('#oid[class="input-small"').each(function() {
-        
+
     })
-    $.post("/postHost", )
+    //$.post("/postHost", )
 }
