@@ -46,4 +46,4 @@ TODO
         i. add a new device
         ii. add oid for tracking (thresholds)
 2. Backend
-	a. worker loop to watch tracked oids loop
+	a. worker loop to watch tracked oids pool

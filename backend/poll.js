@@ -40,7 +40,7 @@ function eventCheck(name,oid,value){
     var time = new Date();
     var MongoClient = require('mongodb').MongoClient;
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        db.collection('mb.history').insert({hostname:name,oid:oid,date:time.toString()});
+        db.collection('mb.history').insert({hostname:name,oid:oid,date:time.getTime()});
     });
 }
 function logHistory(name,oid,value){
@@ -48,7 +48,7 @@ function logHistory(name,oid,value){
     var MongoClient = require('mongodb').MongoClient;
     //insert unsorted poll data to history collection
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-    db.collection('mb.history').insert({hostname:name,oid:oid,date:time.toString(),response:value},{w:1},function(){db.close()});
+    db.collection('mb.history').insert({hostname:name,oid:oid,date:time.getTime(),response:value},{w:1},function(){db.close()});
     });
 }
 //exports.snmp = snmps;
