@@ -39,23 +39,23 @@ function fillModal(id){
 		for(var j=0;j<data.alarms.length;j++){
 			var alarm = data.alarms[j];
 			$("#oids").append('<tr >'+
-				'<td><input class="input-small" type="text" value='+alarm.oid+'></td>'+
-				'<td><input class="input-small" type="text" value='+alarm.error+'></td>'+
-				'<td><input class="input-small" type="text" value='+alarm.errormsg+'></td>'+
-				'<td><input class="input-small" type="text" value='+alarm.warn+'></td>'+
-				'<td><input class="input-small" type="text" value='+alarm.warnmsg+'></td>'+
-				'<td><input class="input-small" type="text" value='+alarm.clear+'></td>'+
-				'<td><input class="input-small" type="text" value='+alarm.clearmsg+'></td>'+
+				'<td><input class="input-small" type="text" name="oid" value='+alarm.oid+'></td>'+
+				'<td><input class="input-small" type="text" name="error" value='+alarm.error+'></td>'+
+				'<td><input class="input-small" type="text" name="emsg" value='+alarm.errormsg+'></td>'+
+				'<td><input class="input-small" type="text" name="warn" value='+alarm.warn+'></td>'+
+				'<td><input class="input-small" type="text" name="wmsg" value='+alarm.warnmsg+'></td>'+
+				'<td><input class="input-small" type="text" name="clear" value='+alarm.clear+'></td>'+
+				'<td><input class="input-small" type="text" name="cmsg" value='+alarm.clearmsg+'></td>'+
 				'</tr>');
 		}
 		$("#oids").append('<tr>'+
-				'<td><input class="input-small" type="text"></td>'+
-				'<td><input class="input-small" type="text"></td>'+
-				'<td><input class="input-small" type="text"></td>'+
-				'<td><input class="input-small" type="text"></td>'+
-				'<td><input class="input-small" type="text"></td>'+
-				'<td><input class="input-small" type="text"></td>'+
-				'<td><input class="input-small" type="text"></td>'+
+				'<td><input class="input-small" type="text" name="oid"></td>'+
+				'<td><input class="input-small" type="text" name="error"></td>'+
+				'<td><input class="input-small" type="text" name="emsg"></td>'+
+				'<td><input class="input-small" type="text" name="warn"></td>'+
+				'<td><input class="input-small" type="text" name="wmsg"></td>'+
+				'<td><input class="input-small" type="text" name="clear"></td>'+
+				'<td><input class="input-small" type="text" name="cmsg "></td>'+
 				'</tr>');
 
 		//<td id="oid"><input type="text" id="" placeholder="yo"><td>
@@ -65,4 +65,12 @@ function fillModal(id){
 
 function jq(myid) {
    return '#' + myid.replace(/(:|\.)/g,'\\$1');
+}
+
+function postHost() {
+    var postData;
+    $('#oid[class="input-small"').each(function() {
+        
+    })
+    $.post("/postHost", )
 }

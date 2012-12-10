@@ -23,7 +23,7 @@ exports.go = function(){
                         snmps(device.hostname,device.port,device.community,'get',poll.oid,function(value){
                             //console.log(value);
                             logHistory(device.hostname,poll.oid,value);
-                            eventCheck(value,device,poll.oid);
+                            //eventCheck(value,device,poll.oid);
                         })
                     })
                 } else{
