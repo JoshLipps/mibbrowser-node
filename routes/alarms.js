@@ -17,7 +17,8 @@ exports.index = function(req, res){
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
     if(!err) { console.log("We are connected"); }
     db.collection("mb.events").find({},{}).toArray(function(err, events) {
-    if(!err) { console.log("Events returned"); }
+    if(err) { console.log("Events not returned"); } 
+    else{
             res.render('alarms', {
                 title: 'NMS Alarms',
                 script: scripts,
@@ -26,6 +27,7 @@ exports.index = function(req, res){
                 events: events
             });
             db.close();
+        }
         });
     });
 };

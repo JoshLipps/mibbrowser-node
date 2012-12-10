@@ -27,6 +27,7 @@ exports.go = function(){
                         })
                     })
                 } else{
+                //console.log(">> Closing connection");
                 //db.close();
                 }
             });
@@ -70,7 +71,7 @@ function eventCheck(host,oid,value){
                 host.alarms[i].state = "error";
                 updateState(host,oid,"error");
             }else if(value<host.alarms[i].warn){
-                createEvent(host.hostname,oid,'warn',host.alarms[i].warnmsg);
+                createEvent(host.hostname,oid,'warning',host.alarms[i].warnmsg);
                 host.alarms[i].state = "warn";
                 updateState(host,oid,"warn");
             }
