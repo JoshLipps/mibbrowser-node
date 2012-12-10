@@ -6,7 +6,7 @@ exports.go = function(){
     //for poll collection poll and dump response in history collection
     var MongoClient = require('mongodb').MongoClient;
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        if(err) { console.log("DB connection error - polling"); db.close(); }
+        if(err) { console.log("DB connection error - polling"); }
         else{
 
             //find all devices to be polled

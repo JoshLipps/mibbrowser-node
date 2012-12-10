@@ -49,7 +49,7 @@ app.get('/devices', devices.index);
 app.get('/api', api.snmpget);
 app.get('/api/mib2', api.mib2);
 app.get('/api/events', api.getEvents);
-app.get('/api/hosts', api.getHosts);
+app.get('/api/host', api.getHost);
 app.get('/api/history', api.getHistory);
 
 //Single out of band poll cycle;

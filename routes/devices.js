@@ -6,7 +6,8 @@
 
 var bodystuff ='',scripts = '<script src="/js/alarmsFront.js"></script>',css = '<link rel="stylesheet" href="css/devices.css" />',forms;
 
-forms=["device","community","port","oid","warn","warnmsg","error","errormsg","clear","clearmsg"];
+forms=["hostname","community","port"];
+//oids=["oid","warn","warnmsg","error","errormsg","clear","clearmsg"];
 
 exports.index = function(req, res){
 	var MongoClient = require('mongodb').MongoClient;

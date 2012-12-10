@@ -63,14 +63,13 @@ exports.mib2 = function(req,res){
     res.send(mib2);
 };
 
-exports.getHosts = function(req,res) {
+exports.getHost = function(req,res) {
     var MongoClient = require('mongodb').MongoClient;
-    //console.log(process.env.MONGOLAB_URI);
 
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        if(!err) { console.log("We are connected"); }
-        db.collection("mb.devices").find({},{hostname: 1}).toArray(function(err, docs) {
-                res.send(docs);
+        if(err) { console.log("getHost connect fail"); }
+        db.collection("mb.devices").findOne({hostname:req.query.hostname},function(err, host) {
+                res.send(host);
                 db.close();
         });
     });
@@ -80,7 +79,7 @@ exports.getEvents = function(req,res) {
     var MongoClient = require('mongodb').MongoClient;
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
         if(!err) { console.log("We are connected"); }
-        db.collection("mb.events").find({},{}).toArray(function(err, docs) {
+        db.collection("mb.events").find({device:req.query.device},{}).toArray(function(err, docs) {
                 res.send(docs);
                 db.close();
         });
