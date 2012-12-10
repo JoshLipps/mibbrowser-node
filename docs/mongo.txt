@@ -36,5 +36,6 @@ mb.poll{
 mb.history: {
     hostname,
     oid,
-    date
+    date,
+    response
 }

@@ -51,12 +51,15 @@ app.get('/api/mib2', api.mib2);
 app.get('/api/events', api.getEvents);
 app.get('/api/hosts', api.getHosts);
 
+//Single out of band poll cycle;
+poll.go();
+
 //Poll loop
 loop = setInterval(function(){
   var time = new Date();
   console.log("Interval " + time.toString());
   poll.go();
-}, 5000);
+}, 15000);
 //setInterval(callback, delay, [arg], [...])#
 //To schedule the repeated execution of callback every delay milliseconds. Returns a intervalId for possible use with clearInterval(). Optionally you can also pass arguments to the callback.
 

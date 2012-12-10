@@ -7,22 +7,25 @@ exports.go = function(){
     var MongoClient = require('mongodb').MongoClient;
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
         if(err) { console.log("DB connection error - polling"); }
+
+        //find all devices to be polled
         db.collection("mb.poll").find({},{}).each(function(err,poll) {
             var BSON= require('mongodb').BSONPure,obj_id;
             if(err) { console.log("DB connection error - polling"); }
             if(poll){
                 //console.log(poll.deviceID);
                 obj_id = BSON.ObjectID.createFromHexString(poll.deviceID);
+                
+                //grab device from device table
                 db.collection("mb.devices").findOne(obj_id,function(err,device){
-
+                    //poll device
                     snmps(device.hostname,device.port,device.community,'get',poll.oid,function(value){
-                        console.log(value);
+                        //console.log(value);
+                        logHistory(device.hostname,poll.oid,value);
+                        //eventCheck(value,device,poll.oid);
                     })
                 })
             } else{
-                //snmpget();
-                    //pollitem.
-            //}
             //db.close();
             }
         });
@@ -31,7 +34,23 @@ exports.go = function(){
     //check for event conditions
 
 };
-//function event(){}
+
+//checks to see if this event requires new event
+function eventCheck(name,oid,value){
+    var time = new Date();
+    var MongoClient = require('mongodb').MongoClient;
+    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+        db.collection('mb.history').insert({hostname:name,oid:oid,date:time.toString()});
+    });
+}
+function logHistory(name,oid,value){
+    var time = new Date();
+    var MongoClient = require('mongodb').MongoClient;
+    //insert unsorted poll data to history collection
+    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+    db.collection('mb.history').insert({hostname:name,oid:oid,date:time.toString(),response:value},{w:1},function(){db.close()});
+    });
+}
 //exports.snmp = snmps;
 var  snmps = function(host,port,community,action,requestedOid,callback){
 
