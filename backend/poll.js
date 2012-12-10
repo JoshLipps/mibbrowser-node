@@ -53,13 +53,13 @@ function logHistory(name,oid,value){
 }
 //exports.snmp = snmps;
 var  snmps = function(host,port,community,action,requestedOid,callback){
-
+    //console.log(port);
     //add input validation PLEASE.
-    var session = new snmp.Session({ host: host, port: port, community: 'cs158b!' });
+    var session = new snmp.Session({ host:host, port:port, community:community});
     if(action ==="get"){
         session.get({oid: requestedOid}, function (error, varbind) {
             if (error) {
-                console.log('Fail :('); // lawl
+                console.log('Fail :( '+host); // lawl
             } else {
                 //console.log(varbind[0].value);
                 callback(varbind[0].value);
