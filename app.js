@@ -56,7 +56,7 @@ loop = setInterval(function(){
   var time = new Date();
   console.log("Interval " + time.toString());
   poll.go();
-}, 15000);
+}, 5000);
 //setInterval(callback, delay, [arg], [...])#
 //To schedule the repeated execution of callback every delay milliseconds. Returns a intervalId for possible use with clearInterval(). Optionally you can also pass arguments to the callback.
 
