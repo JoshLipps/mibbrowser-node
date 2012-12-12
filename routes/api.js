@@ -94,7 +94,12 @@ exports.getHistory = function(req,res) {
     MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
         if(!err) { console.log("We are connected"); }
         db.collection("mb.history").find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':10}).toArray(function(err, docs) {
-                res.send(docs);
+                var output = [];
+                docs.forEach(function(element, index, array){
+                    var row =[element.date,element.response];
+                    output[index]=row;
+                });
+                res.send(output);
                 db.close();
         });
     });

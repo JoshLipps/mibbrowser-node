@@ -1,9 +1,34 @@
 //alarmsFront.js
+
+//google.load("visualization", "1", {packages:["corechart"]}); 
+
 $(document).ready(function() {
    //$('div.thedialog').dialog({ autoOpen: false })
    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
    fillModal("thor.yawnneko.com");
-});
+   //drawChart();
+   google.setOnLoadCallback(drawChart());
+   });
+
+function drawChart() {
+	//data = google.visualization.arrayToDataTable([['Time','Value'],['0',0]]),
+	var data = new google.visualization.DataTable(),	
+ 	options = {title: 'Device Performance'},
+ 	chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	
+ 	
+ 	data.addColumn('number', 'Time');
+	data.addColumn('number', 'Uptime');
+	//chart.draw(data, options};
+	
+
+	//setInterval('updateChart()', 5000 );
+	$.get('/api/history/',{hostname:'thor.yawnneko.com',oid:'.1.3.6.1.2.1.1.3.0'},function(res){
+		data.addRows(res);
+		chart.draw(data, options);
+
+	});
+	}
 
 function activeclick(elem){
     //console.log('The ID of the element which triggered this is: #' + elem.id);
@@ -69,7 +94,7 @@ function jq(myid) {
 
 function postHost() {
     var postData;
-    $('#oid[class="input-small"').each(function() {
+    $('#oid[class="input-small"]').each(function() {
 
     })
     //$.post("/postHost", )

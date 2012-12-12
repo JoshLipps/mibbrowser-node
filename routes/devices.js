@@ -4,7 +4,9 @@
 // this should print all devices stored in the DB server and provide for adding new devices
 //
 
-var bodystuff ='',scripts = '<script src="/js/alarmsFront.js"></script>',css = '<link rel="stylesheet" href="css/devices.css" />',forms;
+var bodystuff ='',scripts = '<script type="text/javascript" src="https://www.google.com/jsapi"></script>\n'+
+'<script type="text/javascript" src="/js/goog.js"></script>\n'+
+'<script src="/js/devicefront.js"></script>',css = '<link rel="stylesheet" href="css/devices.css" />\n',forms;
 
 forms=["hostname","community","port"];
 
