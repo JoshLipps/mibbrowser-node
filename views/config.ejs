@@ -7,12 +7,8 @@
   <div class="modal-body">
     <form class="form-inline">
       <%for (var i=0;i<forms.length;i++) {%>
-        <div class="control-group">
-          <label class="control-label" for="<%=forms[i]%>" > <%=forms[i]%></label>
-          <div class="controls">
-            <input type="text" id="<%=forms[i]%>" placeholder="<%=forms[i]%>">
-          </div>
-        </div>
+          <label class="" for="<%=forms[i]%>" > <%=forms[i]%></label>
+          <input class="input-small" type="text" id="<%=forms[i]%>" placeholder="<%=forms[i]%>">
         <% } %>
         <table class="table table-hover table-condensed">
           <thead>

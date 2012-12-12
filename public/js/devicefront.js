@@ -12,7 +12,7 @@ function drawChart() {
 	var data = new google.visualization.DataTable(),	
  	options = {title: 'Device Performance'},
  	chart = new google.visualization.LineChart(document.getElementById('chart_div')),
- 	dateFormat = new google.visualization.DateFormat({pattern: "h:m aa"});	
+ 	dateFormat = new google.visualization.DateFormat({pattern: "h:mm aa, EEE"});	
 
  	
  	data.addColumn('date', 'Time');

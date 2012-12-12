@@ -46,6 +46,13 @@ margin-top: 2px;
 margin-right: -6px;
 opacity: .25;
 }
+.inuputs{
+  width: auto;
+}
 .modal {
-  width: 700px;
+  width: auto;
+  left: 40%;
+}
+#hostname{
+  width: auto;
 }
