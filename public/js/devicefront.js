@@ -1,30 +1,30 @@
 //alarmsFront.js
 
-//google.load("visualization", "1", {packages:["corechart"]}); 
 
 $(document).ready(function() {
    //$('div.thedialog').dialog({ autoOpen: false })
    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
    fillModal("thor.yawnneko.com");
-   //drawChart();
    google.setOnLoadCallback(drawChart());
    });
 
 function drawChart() {
-	//data = google.visualization.arrayToDataTable([['Time','Value'],['0',0]]),
 	var data = new google.visualization.DataTable(),	
  	options = {title: 'Device Performance'},
- 	chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-	
+ 	chart = new google.visualization.LineChart(document.getElementById('chart_div')),
+ 	dateFormat = new google.visualization.DateFormat({pattern: "h:m aa"});	
+
  	
- 	data.addColumn('number', 'Time');
+ 	data.addColumn('date', 'Time');
 	data.addColumn('number', 'Uptime');
-	//chart.draw(data, options};
+
 	
 
 	//setInterval('updateChart()', 5000 );
 	$.get('/api/history/',{hostname:'thor.yawnneko.com',oid:'.1.3.6.1.2.1.1.3.0'},function(res){
+		for(var i=0;i<res.length;i++){res[i][0]=new Date(res[i][0]);}
 		data.addRows(res);
+		dateFormat.format(data, 0);
 		chart.draw(data, options);
 
 	});
