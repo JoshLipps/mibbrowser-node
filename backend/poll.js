@@ -116,7 +116,7 @@ var  snmps = function(host,port,community,action,requestedOid,callback){
     if(action ==="get"){
         session.get({oid: requestedOid}, function (error, varbind) {
             if (error) {
-                console.log('Fail :( '+host); // lawl
+                console.log('Fail :( error:'+error+" Host: "+host); // lawl
             } else {
                 //console.log(varbind[0].value);
                 callback(varbind[0].value);

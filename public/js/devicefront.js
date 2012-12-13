@@ -3,22 +3,36 @@
 
 $(document).ready(function() {
    //$('div.thedialog').dialog({ autoOpen: false })
+   //Get first device 
+   var firstDevice = "snmp.yawnneko.com"
    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
-   fillModal("thor.yawnneko.com");
-   google.setOnLoadCallback(drawChart());
+   fillModal(firstDevice);
+   google.setOnLoadCallback(drawCharts(firstDevice));
    });
+//Draw all charts for a device
+function drawCharts(device){
+	$.get('api/Host',{hostname:device},function(host){
+		//console.log("Device:"+device+" "+host);
+		host.alarms.forEach(function (ele,index,array){
+			//add div 
+			var chartDiv = '<h3>OID: '+ele.oid+'</h3><div id="chart_div'+index+'"></div>';
+			console.log(chartDiv);
 
-function drawChart() {
+			$('#charts').append(chartDiv);
+			drawChart(device.hostname,ele.oid,index);
+		});
+	});
+}
+
+function drawChart(hostname,oid,index) {
 	var data = new google.visualization.DataTable(),	
  	options = {title: 'Device Performance'},
- 	chart = new google.visualization.LineChart(document.getElementById('chart_div')),
+ 	chart = new google.visualization.LineChart(document.getElementById('chart_div'+index)),
  	dateFormat = new google.visualization.DateFormat({pattern: "h:mm aa, EEE"});	
 
  	
  	data.addColumn('date', 'Time');
-	data.addColumn('number', 'Uptime');
-
-	
+	data.addColumn('number', 'Value');
 
 	//setInterval('updateChart()', 5000 );
 	$.get('/api/history/',{hostname:'thor.yawnneko.com',oid:'.1.3.6.1.2.1.1.3.0'},function(res){
@@ -26,7 +40,6 @@ function drawChart() {
 		data.addRows(res);
 		dateFormat.format(data, 0);
 		chart.draw(data, options);
-
 	});
 	}
 

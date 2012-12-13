@@ -44,5 +44,8 @@ TODO
 6. Devices page - Congigure a Graph 
 7. Devices page - Configure a device
 8. Devices page -  Add a new device
+9. Graphs - Click zooming in and out(date filter on api call)
+10. DB - types/names for oids 
+11. Configure Page -Pre-populated oid selections 
 
 
