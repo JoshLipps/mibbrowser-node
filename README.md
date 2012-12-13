@@ -36,14 +36,13 @@ Install
 
 TODO
 ----
-1. Frontend
-	a. Alarms page - links to device page 
-	b. Alarms page - updates live 
-    c. Alarms page - add filter
-	d. Devices page - pull from db 
-        i. graph datas
-	e. Devices page - configure a device
-        i. add a new device
-        ii. add oid for tracking (thresholds)
-2. Backend
-	a. worker loop to watch tracked oids pool
+1. Alarms page - links to device page 
+2. Alarms page - updates live
+3. Browser page - Add ucdavis mib
+4. Alarms page - Add filter:
+5. Devices page - Graph all OIDs of device
+6. Devices page - Congigure a Graph 
+7. Devices page - Configure a device
+8. Devices page -  Add a new device
+
+
