@@ -1,24 +1,22 @@
 <% include header.ejs %>
 <div class="well">
-  <div class="inputbox">
-    <form class="form-inline">
-      <label for="host">Host</label>
-      <input class="input" type="text" id="host" name="host" value="snmp.yawnneko.com" />
-      <label for="community">Community</label>
-      <input class="input-small" type="text" id="community" name="community" value="cs158b!" />
-      <label for="oid">OID</label>
-      <input class="input" type="text" id="oid" name="oid" value=".1.3.6.1.2.1.1.3.0" />
-      <label for="action">Action</label>
-      <select id="action" name="action">
-        <option value="get">Get</option>
-        <option value="getnext">Get Next</option>
-        <option value="getsubtree">Walk</option>
-        <option value="translate">Translate</option>
-      </select>
-      <input class="btn" type="submit" value="Poll" onclick="toGetAPI()" />
-    </form>
-   </div> 
-  </div>
+  <div class="form-inline inputbox">
+    <label for="host">Host</label>
+    <input class="input" type="text" id="host" name="host" value="snmp.yawnneko.com" />
+    <label for="community">Community</label>
+    <input class="input-small" type="text" id="community" name="community" value="cs158b!" />
+    <label for="oid">OID</label>
+    <input class="input" type="text" id="oid" name="oid" value=".1.3.6.1.2.1.1.3.0" />
+    <label for="action">Action</label>
+    <select id="action" name="action">
+      <option value="get">Get</option>
+      <option value="getnext">Get Next</option>
+      <option value="getsubtree">Walk</option>
+      <option value="translate">Translate</option>
+    </select>
+    <input class="btn" type="submit" value="Poll" onclick="toGetAPI()" />
+  </div> 
+</div>
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span4 well mibtree"></div>
