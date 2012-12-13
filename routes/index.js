@@ -2,7 +2,9 @@
 /*
  * GET home page.
  */
-var bodystuff,scripts,css;
+var bodystuff,
+    scripts,
+    css;
 
 scripts =
 '<script src="/js/main.js"></script>\n' +
@@ -11,10 +13,10 @@ scripts =
 css = '<link rel="stylesheet" href="css/browser.css" />';
 
 exports.index = function(req, res){
-  res.render('browser', {
-    title: 'Node NMS',
-    script:scripts,
-    body: bodystuff,
-    css: css
+    res.render('browser', {
+        title: 'Node NMS',
+        script:scripts,
+        body: bodystuff,
+        css: css
     });
 };

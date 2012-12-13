@@ -1,9 +1,10 @@
 
 //
-// GET Import Page
+// GET Alarms Page
 //
 
-//Example tab= require('jquery');
+var mongoConn = require('../backend/mongoConn.js'),
+    db = mongoConn(process.env.MONGOLAB_URI);
 
 //TODO pull this info from mongoDB
 var bodystuff = '',scripts = '', css = '<link rel="stylesheet" href="css/alarms.css" />',events;
@@ -13,21 +14,19 @@ var bodystuff = '',scripts = '', css = '<link rel="stylesheet" href="css/alarms.
 
 
 exports.index = function(req, res){
-    var MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-    if(!err) { console.log("We are connected"); }
-    db.collection("mb.events").find({},{}).toArray(function(err, events) {
-    if(err) { console.log("Events not returned"); } 
-    else{
-            res.render('alarms', {
-                title: 'NMS Alarms',
-                script: scripts,
-                body: bodystuff,
-                css: css,
-                events: events
-            });
-            db.close();
-        }
+    db("mb.events", function(err, events){
+        if(err) console.log("Alarms page error: " + err);
+        events.find({},{sort:{datestamp:-1}}).toArray(function(err, events) {
+            if(err) console.log("Events not returned: " + err); 
+            else {
+                res.render('alarms', {
+                    title: 'NMS Alarms',
+                    script: scripts,
+                    body: bodystuff,
+                    css: css,
+                    events: events
+                });
+            }
         });
     });
 };

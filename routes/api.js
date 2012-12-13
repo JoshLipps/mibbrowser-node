@@ -2,8 +2,11 @@
 /*
  * GET home page.
  */
- var snmp = require('snmp-native'),
- mib2 = require('./mib2');
+var snmp = require('snmp-native'),
+    mib2 = require('./mib2'),
+    mongoConn = require('../backend/mongoConn.js'),
+    db = mongoConn(process.env.MONGOLAB_URI);
+
 exports.snmpget = function(req, res){
 
     console.log(req.query);
@@ -67,40 +70,33 @@ exports.postHost = function(req, res) {
     
 };
 exports.getHost = function(req,res) {
-    var MongoClient = require('mongodb').MongoClient;
-
-    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        if(err) { console.log("getHost connect fail"); }
-        db.collection("mb.devices").findOne({hostname:req.query.hostname},function(err, host) {
-                res.send(host);
-                db.close();
+    db("mb.devices", function(err, devices){ 
+        if(err) console.log("getHost error: " + err);
+        devices.findOne({hostname:req.query.hostname},function(err, host) {
+            res.send(host);
         });
     });
 };
 
 exports.getEvents = function(req,res) {
-    var MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        if(!err) { console.log("We are connected"); }
-        db.collection("mb.events").find({device:req.query.device},{}).toArray(function(err, docs) {
-                res.send(docs);
-                db.close();
+    db("mb.events", function(err, events){
+        if(err) console.log("getEvents error: " + err);
+        events.find({device:req.query.device},{sort:{datestamp:-1}}).toArray(function(err, docs) {
+            res.send(docs);
         });
     });
 };
 
 exports.getHistory = function(req,res) {
-    var MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        if(!err) { console.log("We are connected"); }
-        db.collection("mb.history").find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':100}).toArray(function(err, docs) {
-                var output = [];
-                docs.forEach(function(element, index, array){
-                    var row =[element.date,element.response];
-                    output[index]=row;
-                });
-                res.send(output);
-                db.close();
+    db("mb.history", function(err, history){
+        if(err) console.log("getHistory error: " + err);
+        history.find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':100}).toArray(function(err, docs) {
+            var output = [];
+            docs.forEach(function(element, index, array){
+                var row =[element.date,element.response];
+                output[index]=row;
+            });
+            res.send(output);
         });
     });
 };

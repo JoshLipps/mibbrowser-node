@@ -1,59 +1,67 @@
 //This contains backend polling code
 //should it be called pollHandler? ...rofl
-var snmp = require('snmp-native');
+var snmp = require('snmp-native'),
+    mongoConn = require('../backend/mongoConn.js'),
+    db = mongoConn(process.env.MONGOLAB_URI);
 
 exports.go = function(){
     //for poll collection poll and dump response in history collection
-    var MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        if(err) { console.log("DB connection error - polling"); }
-        else{
+    //var MongoClient = require('mongodb').MongoClient;
+    //MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+        //if(err) { console.log("DB connection error - polling"); }
+        //else{
 
-            //find all devices to be polled
-            db.collection("mb.poll").find({},{}).each(function(err,poll) {
-                var BSON= require('mongodb').BSONPure,obj_id;
-                if(err) { console.log("DB connection error - find(poll)"); }
-                if(poll){
-                    //console.log(poll.deviceID);
-                    obj_id = BSON.ObjectID.createFromHexString(poll.deviceID);
-                    
-                    //grab device from device table
-                    db.collection("mb.devices").findOne(obj_id,function(err,device){
+    //find all devices to be polled
+    db("mb.poll", function(err, poll){
+        if(err) console.log("Poll error: " + err);
+        poll.find({},{}).each(function(err,poll) {
+            var BSON= require('mongodb').BSONPure,obj_id;
+            if(err) console.log("poll.find error: " + err);
+            if(poll){
+                //console.log(poll.deviceID);
+                obj_id = BSON.ObjectID.createFromHexString(poll.deviceID);
+                
+                //grab device from device table
+                db("mb.devices", function(err, devices){
+                    devices.findOne(obj_id,function(err,device){
                         //poll device
                         snmps(device.hostname,device.port,device.community,'get',poll.oid,function(value){
                             //console.log(value);
                             logHistory(device.hostname,poll.oid,value);
                             eventCheck(device,poll.oid,value);
-                        })
-                    })
-                } else{
-                //console.log(">> Closing connection");
-                //db.close();
-                }
-            });
-        }
-        
+                        });
+                    });
+                });
+            }
+        //}
+        });
     });
-    //check for event conditions
-
 };
 
 
 function updateState(name,oid,state){
     console.log("Update State"+JSON.stringify(name));
-    var MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        db.collection('mb.devices').update({hostname:name.hostname},name,{w:1},function(){db.close()});
+    //var MongoClient = require('mongodb').MongoClient;
+    //MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+    db('mb.devices', function(err, devices){
+        if(err) console.log("updateStatus error: " + err);
+        devices.update({hostname:name.hostname}, name, {w:1}, function(){
+            console.log(name.hostname + " updated.");
+        });
     });  
 
 
 }
 function createEvent(name,oid,state,msg){
   //  console.log("createEvent");
-    var MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        var time = new Date();
-        db.collection('mb.events').insert({device:name,alarmname:oid,state:state,description:msg,datestamp:time},function(){db.close()});
+    //var MongoClient = require('mongodb').MongoClient;
+    //MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+    var time = new Date();
+    db('mb.events', function(err, events){
+        if(err) console.log("createEvent error: " + err);
+        events.insert({device:name,alarmname:oid,state:state,description:msg,datestamp:time}, function(){
+            console.log("Event for " + name + ", " + oid + " created.");
+        });
     });
 }
 
@@ -87,15 +95,19 @@ function eventCheck(host,oid,value){
 
 function logHistory(name,oid,value){
     var time = new Date();
-    var MongoClient = require('mongodb').MongoClient;
+    //var MongoClient = require('mongodb').MongoClient;
     //insert unsorted poll data to history collection
-    MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-    if(err){console.log("logHistory db fail")} 
-    else{
-        db.collection('mb.history').insert({hostname:name,oid:oid,date:time.getTime(),response:value},{w:1},function(){db.close()});
-    }
+    //MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
+    //if(err){console.log("logHistory db fail")} 
+    //else{
+    db('mb.history', function(err, history){
+        if(err) console.log("logHistory error: " + err);
+        history.insert({hostname:name,oid:oid,date:time.getTime(),response:value},{w:1},function(){
+            console.log("logHistory: event added for " + name + ":" + oid + ":" + value + ".");
+        });
     });
 }
+
 //exports.snmp = snmps;
 var  snmps = function(host,port,community,action,requestedOid,callback){
     //console.log(port);
