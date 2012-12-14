@@ -25,6 +25,7 @@ exports.go = function(){
                 //grab device from device table
                 db("mb.devices", function(err, devices){
                     devices.findOne(obj_id,function(err,device){
+                        if (err) console.log("devices.findOne error: " + err);
                         //poll device
                         snmps(device.hostname,device.port,device.community,'get',poll.oid,function(value){
                             //console.log(value);
