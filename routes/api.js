@@ -67,8 +67,16 @@ exports.mib2 = function(req,res){
     res.send(mib2);
 };
 exports.postHost = function(req, res) {
-    //var name = req.body.name
-    
+    var device = req.body;
+    console.log(device);
+    /*
+    db('mb.devices', function(err, devices){
+        if(err) console.log("postHost error: " + err);
+        devices.update({hostname:name.hostname}, name, {w:1}, function(){
+            console.log(name.hostname + " updated.");
+        });
+    });  
+    */
 };
 exports.getHost = function(req,res) {
     db("mb.devices", function(err, devices){ 

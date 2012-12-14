@@ -77,11 +77,11 @@ function fillModal(id){
 			$("#oids").append('<tr >'+
 				'<td><input class="input-small" type="text" name="oid" value="'+alarm.oid+'""></td>'+
 				'<td><input class="input-small" type="text" name="error" value="'+alarm.error+'""></td>'+
-				'<td><input class="input-small" type="text" name="emsg" value="'+alarm.errormsg+'""></td>'+
+				'<td><input class="input-small" type="text" name="errormsg" value="'+alarm.errormsg+'""></td>'+
 				'<td><input class="input-small" type="text" name="warn" value="'+alarm.warn+'""></td>'+
-				'<td><input class="input-small" type="text" name="wmsg" value="'+alarm.warnmsg+'""></td>'+
+				'<td><input class="input-small" type="text" name="warnmsg" value="'+alarm.warnmsg+'""></td>'+
 				'<td><input class="input-small" type="text" name="clear" value="'+alarm.clear+'""></td>'+
-				'<td><input class="input-small" type="text" name="cmsg" value="'+alarm.clearmsg+'""></td>'+
+				'<td><input class="input-small" type="text" name="clearmsg" value="'+alarm.clearmsg+'""></td>'+
 				'<td><i class="icon-remove"></i></td>'+
 				'</tr>');
 		}
@@ -92,11 +92,11 @@ function addOidRow(){
 		$("#oids").append('<tr>'+
 			'<td><input class="input-small" type="text" name="oid"></td>'+
 			'<td><input class="input-small" type="text" name="error"></td>'+
-			'<td><input class="input-small" type="text" name="emsg"></td>'+
+			'<td><input class="input-small" type="text" name="errormsg"></td>'+
 			'<td><input class="input-small" type="text" name="warn"></td>'+
-			'<td><input class="input-small" type="text" name="wmsg"></td>'+
+			'<td><input class="input-small" type="text" name="warnmsg"></td>'+
 			'<td><input class="input-small" type="text" name="clear"></td>'+
-			'<td><input class="input-small" type="text" name="cmsg"></td>'+
+			'<td><input class="input-small" type="text" name="clearmsg"></td>'+
 			'<td><i class="icon-remove"></i></td>'+
 			'</tr>');
 }
@@ -110,15 +110,26 @@ function jq(myid) {
    return '#' + myid.replace(/(:|\.)/g,'\\$1');
 }
 
-
+//Function to read in Modal and config host values
 function postHost() {
     var host = {};
+    //should i get host first? Probably;
     host.hostname = $('#hostname').val();
 	host.community = $('#community').val();
 	host.port = $('#port').val();
 	host.alarms = [];
-	//for()
+	//find allrows in CSS id oids
+	$('#oids tr').each(function(rowIndex,row){
+		var oid = {};
+		//get input boxes in each row
+		$(row).find('input').each(function(inpitIndex,input){
+			var name = $(input).attr('name'),
+			value = $(input).val();
+			oid[name] = value;
+		});
+		host.alarms[rowIndex]=oid;
+	});
 
-    console.log(host);
-    //$.post("/postHost", )
+    //console.log(host);
+    $.post("api/host",host);
 }
