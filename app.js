@@ -9,11 +9,11 @@ var express = require('express'),
     api = require('./routes/api'),
     http = require('http'),
     path = require('path'),
-    mongoConn = require('./backend/mongoConn'),
+    db = require('./backend/mongoConn'),
     //backend = require('./backend'),
     poll = require('./backend/poll'),
-    loop = {},
-    db = mongoConn(process.env.MONGOLAB_URI);
+    loop = {};
+    //db = mongoConn(process.env.MONGOLAB_URI);
 
 var app = express();
 
@@ -51,14 +51,14 @@ app.post('/api/host', api.postHost);
 app.get('/api/history', api.getHistory);
 
 //Single out of band poll cycle;
-poll.go();
+//poll.go();
 
 //Poll loop
-loop = setInterval(function(){
+/*loop = setInterval(function(){
   var time = new Date();
   console.log("Interval " + time.toString());
   poll.go();
-}, 300000);
+}, 300000);*/
 //setInterval(callback, delay, [arg], [...])#
 //To schedule the repeated execution of callback every delay milliseconds. Returns a intervalId for possible use with clearInterval(). Optionally you can also pass arguments to the callback.
 

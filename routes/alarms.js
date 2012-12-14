@@ -3,8 +3,9 @@
 // GET Alarms Page
 //
 
-var mongoConn = require('../backend/mongoConn.js'),
-    db = mongoConn(process.env.MONGOLAB_URI);
+//var mongoConn = require('../backend/mongoConn.js'),
+//    db = mongoConn(process.env.MONGOLAB_URI);
+var db = require('../backend/mongoConn.js');
 
 //TODO pull this info from mongoDB
 var bodystuff = '',scripts = '', css = '<link rel="stylesheet" href="css/alarms.css" />',events;

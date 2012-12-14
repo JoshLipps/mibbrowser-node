@@ -4,8 +4,9 @@
  */
 var snmp = require('snmp-native'),
     mib2 = require('./mib2'),
-    mongoConn = require('../backend/mongoConn.js'),
-    db = mongoConn(process.env.MONGOLAB_URI);
+    db = require('../backend/mongoConn.js');
+    //mongoConn = require('../backend/mongoConn.js'),
+    //db = mongoConn(process.env.MONGOLAB_URI);
 
 exports.snmpget = function(req, res){
 
@@ -91,15 +92,21 @@ exports.getHistory = function(req,res) {
     db("mb.history", function(err, history){
         if(err){console.log("getHistory error: " + err);}
         else{
-            console.log("History Query");
-            history.find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':100}).toArray(function(err, docs) {
+            //console.log(history);
+            //history.find().toArray(function(error, docs) { 
+            history.find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':100}).toArray(function(error, docs) { 
                 var output = [],i,row =[];
-                console.log("History Find");
-                for(i=0;i<docs.length;i++){
-                    row =[docs[i].date,docs[i].response];
-                    output[i]=row;
+                if(err){console.log("getHistory error: " + error);}
+                else{
+                    //console.log("History Find");
+                    for(i=0;i<docs.length;i++){
+                        row =[docs[i].date,docs[i].response];
+                        output[i]=row;
+                    }
+                    res.send(output);
+                    
+                    //res.send(docs);
                 }
-                res.send(output);
             });
         }
     });

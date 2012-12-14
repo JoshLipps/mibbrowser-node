@@ -13,6 +13,7 @@ var mongoCache = function(mongoUri){
     // check if we already have this db connection open
     if(mongoDatabases[mongoUri]){
       readyCallback(null, mongoDatabases[mongoUri]);
+      console.log("Duplicate DB request");
       return;
     }
 
@@ -53,4 +54,7 @@ var mongoCache = function(mongoUri){
   return ensureCollection;
 }
 
-module.exports = mongoCache;
+//module.exports = mongoCache;
+//Requires are cached (across entire node app) on first call, moving mongoCache init here uses it accross the entire app (I think);   
+//see http://nodejs.org/api/modules.html#modules_caching
+module.exports = mongoCache(process.env.MONGOLAB_URI);

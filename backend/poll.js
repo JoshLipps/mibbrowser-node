@@ -1,8 +1,9 @@
 //This contains backend polling code
 //should it be called pollHandler? ...rofl
 var snmp = require('snmp-native'),
-    mongoConn = require('../backend/mongoConn.js'),
-    db = mongoConn(process.env.MONGOLAB_URI);
+    db = require('../backend/mongoConn.js');
+    //mongoConn = require('../backend/mongoConn.js'),
+    //db = mongoConn(process.env.MONGOLAB_URI);
 
 exports.go = function(){
     //for poll collection poll and dump response in history collection

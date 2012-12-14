@@ -4,8 +4,9 @@
 // this should print all devices stored in the DB server and provide for adding new devices
 //
 
-var mongoConn = require('../backend/mongoConn.js'),
-db = mongoConn(process.env.MONGOLAB_URI);
+//var mongoConn = require('../backend/mongoConn.js'),
+//db = mongoConn(process.env.MONGOLAB_URI);
+var db = require('../backend/mongoConn');
 
 var bodystuff ='',scripts = '<script type="text/javascript" src="https://www.google.com/jsapi"></script>\n'+
 '<script type="text/javascript" src="/js/goog.js"></script>\n'+

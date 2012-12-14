@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 //Draw all charts for a device
 function drawCharts(device){
-	$.get('api/Host',{hostname:device},function(host){
+	$.get('api/host',{hostname:device},function(host){
 		//console.log("Device:"+device+" "+host);
 		host.alarms.forEach(function (ele,index,array){
 			//add div 
@@ -68,7 +68,7 @@ function redrawAlarms(id){
 }
 function fillModal(id){
 	$("#oids").children().remove();
-	$.get('api/Host',{hostname:id},function(data){
+	$.get('api/host',{hostname:id},function(data){
 		$('#hostname').val(data.hostname);
 		$('#community').val(data.community);
 		$('#port').val(data.port);
