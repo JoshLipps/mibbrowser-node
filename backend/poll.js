@@ -12,7 +12,8 @@ exports.go = function(){
         //if(err) { console.log("DB connection error - polling"); }
         //else{
 
-    //find all devices to be polled
+    //find all oids on devices to be polled
+    
     db("mb.poll", function(err, poll){
         if(err) console.log("Poll error: " + err);
         poll.find({},{}).each(function(err,poll) {
@@ -79,6 +80,7 @@ function eventCheck(host,oid,value){
                 createEvent(host.hostname,oid,'error',host.alarms[i].errormsg);
                 host.alarms[i].state = "error";
                 updateState(host,oid,"error");
+
             }else if(value<host.alarms[i].warn){
                 createEvent(host.hostname,oid,'warning',host.alarms[i].warnmsg);
                 host.alarms[i].state = "warn";
