@@ -6,6 +6,7 @@ $(document).ready(function() {
    //Get first device 
    var firstDevice = "snmp.yawnneko.com"
    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
+   $('.icon-remove').live('click', removeOIDRow);
    fillModal(firstDevice);
    google.setOnLoadCallback(drawCharts(firstDevice));
    });
@@ -16,8 +17,6 @@ function drawCharts(device){
 		host.alarms.forEach(function (ele,index,array){
 			//add div 
 			var chartDiv = '<h3>OID: '+ele.oid+'</h3><div id="chart_div'+index+'"></div>';
-			console.log(chartDiv);
-
 			$('#charts').append(chartDiv);
 			drawChart(device.hostname,ele.oid,index);
 		});
@@ -77,38 +76,44 @@ function fillModal(id){
 		for(var j=0;j<data.alarms.length;j++){
 			var alarm = data.alarms[j];
 			$("#oids").append('<tr >'+
-				'<td><input class="input-small" type="text" name="oid" value='+alarm.oid+'></td>'+
-				'<td><input class="input-small" type="text" name="error" value='+alarm.error+'></td>'+
-				'<td><input class="input-small" type="text" name="emsg" value='+alarm.errormsg+'></td>'+
-				'<td><input class="input-small" type="text" name="warn" value='+alarm.warn+'></td>'+
-				'<td><input class="input-small" type="text" name="wmsg" value='+alarm.warnmsg+'></td>'+
-				'<td><input class="input-small" type="text" name="clear" value='+alarm.clear+'></td>'+
-				'<td><input class="input-small" type="text" name="cmsg" value='+alarm.clearmsg+'></td>'+
+				'<td><input class="input-small" type="text" name="oid" value="'+alarm.oid+'""></td>'+
+				'<td><input class="input-small" type="text" name="error" value="'+alarm.error+'""></td>'+
+				'<td><input class="input-small" type="text" name="emsg" value="'+alarm.errormsg+'""></td>'+
+				'<td><input class="input-small" type="text" name="warn" value="'+alarm.warn+'""></td>'+
+				'<td><input class="input-small" type="text" name="wmsg" value="'+alarm.warnmsg+'""></td>'+
+				'<td><input class="input-small" type="text" name="clear" value="'+alarm.clear+'""></td>'+
+				'<td><input class="input-small" type="text" name="cmsg" value="'+alarm.clearmsg+'""></td>'+
+				'<td><i class="icon-remove"></i></td>'+
 				'</tr>');
 		}
-		$("#oids").append('<tr>'+
-				'<td><input class="input-small" type="text" name="oid"></td>'+
-				'<td><input class="input-small" type="text" name="error"></td>'+
-				'<td><input class="input-small" type="text" name="emsg"></td>'+
-				'<td><input class="input-small" type="text" name="warn"></td>'+
-				'<td><input class="input-small" type="text" name="wmsg"></td>'+
-				'<td><input class="input-small" type="text" name="clear"></td>'+
-				'<td><input class="input-small" type="text" name="cmsg "></td>'+
-				'</tr>');
-
-		//<td id="oid"><input type="text" id="" placeholder="yo"><td>
 	});
 }
 
+function addOidRow(){
+		$("#oids").append('<tr>'+
+			'<td><input class="input-small" type="text" name="oid"></td>'+
+			'<td><input class="input-small" type="text" name="error"></td>'+
+			'<td><input class="input-small" type="text" name="emsg"></td>'+
+			'<td><input class="input-small" type="text" name="warn"></td>'+
+			'<td><input class="input-small" type="text" name="wmsg"></td>'+
+			'<td><input class="input-small" type="text" name="clear"></td>'+
+			'<td><input class="input-small" type="text" name="cmsg"></td>'+
+			'<td><i class="icon-remove"></i></td>'+
+			'</tr>');
+}
+
+function removeOIDRow(){
+	console.log("Remove Row");
+	$(this).parents('tr').remove();	
+}
 
 function jq(myid) {
    return '#' + myid.replace(/(:|\.)/g,'\\$1');
 }
 
+
 function postHost() {
     var postData;
-    $('#oid[class="input-small"]').each(function() {
-
-    })
+    //console.log($('#oids').children());
     //$.post("/postHost", )
 }
