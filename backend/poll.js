@@ -6,36 +6,22 @@ var snmp = require('snmp-native'),
     //db = mongoConn(process.env.MONGOLAB_URI);
 
 exports.go = function(){
-    //for poll collection poll and dump response in history collection
-    //var MongoClient = require('mongodb').MongoClient;
-    //MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
-        //if(err) { console.log("DB connection error - polling"); }
-        //else{
-
+    //for device collection poll and dump response in history collection
     //find all oids on devices to be polled
-    
-    db("mb.poll", function(err, poll){
-        if(err) console.log("Poll error: " + err);
-        poll.find({},{}).each(function(err,poll) {
-            var BSON= require('mongodb').BSONPure,obj_id;
+    db("mb.devices", function(err, devices){
+        if(err) console.log("Poll - Device collection: " + err);
+        devices.find().each(function(err,device) {
             if(err) console.log("poll.find error: " + err);
-            if(poll){
-                //console.log(poll.deviceID);
-                obj_id = BSON.ObjectID.createFromHexString(poll.deviceID);
-                
-                //grab device from device table
-                db("mb.devices", function(err, devices){
-                    devices.findOne(obj_id,function(err,device){
-                        //poll device
-                        snmps(device.hostname,device.port,device.community,'get',poll.oid,function(value){
-                            //console.log(value);
-                            logHistory(device.hostname,poll.oid,value);
-                            eventCheck(device,poll.oid,value);
-                        });
+            if(device){
+                //poll each alarm
+                device.alarms.forEach(function(alarm,index,alarms){
+                    //poll Oid
+                    snmps(device.hostname,device.port,device.community,'get',alarm.oid,function(value){
+                        logHistory(device.hostname,alarm.oid,value);
+                        eventCheck(device,alarm.oid,value);
                     });
                 });
             }
-        //}
         });
     });
 };
