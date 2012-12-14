@@ -16,7 +16,7 @@ exports.snmpget = function(req, res){
 
     //console.log("requestedOid: " + requestedOid);
 
-    session = new snmp.Session({ host: req.query.host, port: 161, community: req.query.community });
+    session = new snmp.Session({ host: req.query.host, port: req.query.port, community: req.query.community });
     if(req.query.action =="get"){
 
         session.get({oid: requestedOid}, function (error, varbind) {

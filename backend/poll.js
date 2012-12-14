@@ -19,6 +19,7 @@ exports.go = function(){
                     snmps(device.hostname,device.port,device.community,'get',alarm.oid,function(value){
                         logHistory(device.hostname,alarm.oid,value);
                         eventCheck(device,alarm.oid,value);
+
                     });
                 });
             }
