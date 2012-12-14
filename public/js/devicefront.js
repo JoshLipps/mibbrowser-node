@@ -2,14 +2,14 @@
 
 
 $(document).ready(function() {
-   //$('div.thedialog').dialog({ autoOpen: false })
-   //Get first device 
+   //TODO Get first device 
    var firstDevice = "snmp.yawnneko.com"
    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
    $('.icon-remove').live('click', removeOIDRow);
-   fillModal(firstDevice);
+   //fillModal(firstDevice);
    google.setOnLoadCallback(drawCharts(firstDevice));
    });
+
 //Draw all charts for a device
 function drawCharts(device){
 	$.get('api/Host',{hostname:device},function(host){
@@ -71,7 +71,6 @@ function fillModal(id){
 	$.get('api/Host',{hostname:id},function(data){
 		$('#hostname').val(data.hostname);
 		$('#community').val(data.community);
-		$('#oid').val(data.oid);
 		$('#port').val(data.port);
 		for(var j=0;j<data.alarms.length;j++){
 			var alarm = data.alarms[j];
@@ -103,7 +102,7 @@ function addOidRow(){
 }
 
 function removeOIDRow(){
-	console.log("Remove Row");
+	//console.log("Remove Row");
 	$(this).parents('tr').remove();	
 }
 
@@ -113,7 +112,13 @@ function jq(myid) {
 
 
 function postHost() {
-    var postData;
-    //console.log($('#oids').children());
+    var host = {};
+    host.hostname = $('#hostname').val();
+	host.community = $('#community').val();
+	host.port = $('#port').val();
+	host.alarms = [];
+	//for()
+
+    console.log(host);
     //$.post("/postHost", )
 }

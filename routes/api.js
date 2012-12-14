@@ -89,15 +89,19 @@ exports.getEvents = function(req,res) {
 
 exports.getHistory = function(req,res) {
     db("mb.history", function(err, history){
-        if(err) console.log("getHistory error: " + err);
-        history.find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':100}).toArray(function(err, docs) {
-            var output = [];
-            docs.forEach(function(element, index, array){
-                var row =[element.date,element.response];
-                output[index]=row;
+        if(err){console.log("getHistory error: " + err);}
+        else{
+            console.log("History Query");
+            history.find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':100}).toArray(function(err, docs) {
+                var output = [],i,row =[];
+                console.log("History Find");
+                for(i=0;i<docs.length;i++){
+                    row =[docs[i].date,docs[i].response];
+                    output[i]=row;
+                }
+                res.send(output);
             });
-            res.send(output);
-        });
+        }
     });
 };
 
