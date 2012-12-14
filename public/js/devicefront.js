@@ -73,15 +73,24 @@ function fillModal(id){
 		$('#community').val(data.community);
 		$('#port').val(data.port);
 		for(var j=0;j<data.alarms.length;j++){
-			var alarm = data.alarms[j];
+			var alarm = data.alarms[j],errorstate="",warningstate="",clearstate="";
+			if(alarm.state=='error'){errorstate="selected"}
+			else if(alarm.state=='warning'){warningstate="selected"}
+			else{clearstate="selected"}
+
 			$("#oids").append('<tr >'+
 				'<td><input class="input-small" type="text" name="oid" value="'+alarm.oid+'""></td>'+
-				'<td><input class="input-small" type="text" name="error" value="'+alarm.error+'""></td>'+
+				'<td><input class="input-small input-num" type="text" name="error" value="'+alarm.error+'""></td>'+
 				'<td><input class="input-small" type="text" name="errormsg" value="'+alarm.errormsg+'""></td>'+
-				'<td><input class="input-small" type="text" name="warn" value="'+alarm.warn+'""></td>'+
+				'<td><input class="input-small input-num" type="text" name="warn" value="'+alarm.warn+'""></td>'+
 				'<td><input class="input-small" type="text" name="warnmsg" value="'+alarm.warnmsg+'""></td>'+
-				'<td><input class="input-small" type="text" name="clear" value="'+alarm.clear+'""></td>'+
+				'<td><input class="input-small input-num" type="text" name="clear" value="'+alarm.clear+'""></td>'+
 				'<td><input class="input-small" type="text" name="clearmsg" value="'+alarm.clearmsg+'""></td>'+
+				'<td><select name="state">'+
+					'<option value="success"'+clearstate+'>Success</option>'+
+					'<option value="warning"'+warningstate+'>Warning</option>'+
+					'<option value="error"'+errorstate+'>Error</option>'+
+				'</select> </td>'+
 				'<td><i class="icon-remove"></i></td>'+
 				'</tr>');
 		}
@@ -91,12 +100,17 @@ function fillModal(id){
 function addOidRow(){
 		$("#oids").append('<tr>'+
 			'<td><input class="input-small" type="text" name="oid"></td>'+
-			'<td><input class="input-small" type="text" name="error"></td>'+
+			'<td><input class="input-small input-num" type="text" name="error"></td>'+
 			'<td><input class="input-small" type="text" name="errormsg"></td>'+
-			'<td><input class="input-small" type="text" name="warn"></td>'+
+			'<td><input class="input-small input-num" type="text" name="warn"></td>'+
 			'<td><input class="input-small" type="text" name="warnmsg"></td>'+
-			'<td><input class="input-small" type="text" name="clear"></td>'+
+			'<td><input class="input-small input-num" type="text" name="clear"></td>'+
 			'<td><input class="input-small" type="text" name="clearmsg"></td>'+
+			'<td><select name="state">'+
+					'<option value="success">Success</option>'+
+					'<option value="warning">Warning</option>'+
+					'<option value="error">Error</option>'+
+				'</select> </td>'+
 			'<td><i class="icon-remove"></i></td>'+
 			'</tr>');
 }
@@ -127,6 +141,9 @@ function postHost() {
 			value = $(input).val();
 			oid[name] = value;
 		});
+		//grab state dropdown
+		oid['state'] = $(row).find('select').val();
+
 		host.alarms[rowIndex]=oid;
 	});
 

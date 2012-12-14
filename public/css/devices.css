@@ -50,7 +50,12 @@ opacity: .25;
   height: 250px;
   position: relative;
 }
-
+select{
+  width: auto;
+}
+.input-num{
+  width: 3em;
+}
 #hostname{
   width: auto;
 }
