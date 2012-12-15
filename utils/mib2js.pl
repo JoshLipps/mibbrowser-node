@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use JSON;
+
 sub usage() {
     print("Makes a snmptranslate -Tz into ugly JS.\n");
     print("\tUsage: $0 inFile outFile\n");
@@ -7,6 +9,7 @@ sub usage() {
 
 my $filename = shift();
 my $outfile = shift();
+my %monstrosity;
 
 if(!defined($filename) | !defined($outfile)) { usage(); exit(1); }
 
@@ -23,4 +26,6 @@ while(<MIB>) {
     @mib = split(/\./, $oid);
 
     print(JSOUT "ucdavis[\"".join("\"][\"",@mib)."\"] = { \"name\": \"$desc\", \"oid\": $oid }\;\n");
+
+
 }

@@ -12,7 +12,8 @@ var express = require('express'),
     db = require('./backend/mongoConn'),
     //backend = require('./backend'),
     poll = require('./backend/poll'),
-    loop = {};
+    loop = {},
+    pollEnabled = (typeof process.env.NOPOLL === 'undefined');
     //db = mongoConn(process.env.MONGOLAB_URI);
 
 var app = express();
@@ -50,15 +51,18 @@ app.get('/api/host', api.getHost);
 app.post('/api/host', api.postHost);
 app.get('/api/history', api.getHistory);
 
-//Single out of band poll cycle;
-poll.go();
+if(pollEnabled) {
+    console.log("Polling Enabled.");
+    //Single out of band poll cycle;
+    poll.go();
 
-//Poll loop
-loop = setInterval(function(){
-  var time = new Date();
-  console.log("Interval " + time.toString());
-  poll.go();
-}, 30000);
+    //Poll loop
+    loop = setInterval(function(){
+    var time = new Date();
+        console.log("Interval " + time.toString());
+        poll.go();
+    }, 30000);
+} else { console.log("Polling Disabled."); }
 
 //setInterval(callback, delay, [arg], [...])#
 //To schedule the repeated execution of callback every delay milliseconds. Returns a intervalId for possible use with clearInterval(). Optionally you can also pass arguments to the callback.
