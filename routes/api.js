@@ -108,7 +108,7 @@ exports.getHistory = function(req,res) {
                 else{
                     console.log("History Find");
                     for(i=0;i<docs.length;i++){
-                        console.log(docs[i]);
+                        //console.log(docs[i]);
 
                         row =[docs[i].date,docs[i].response];
                         output[i]=row;
