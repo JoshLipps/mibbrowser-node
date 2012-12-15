@@ -16,7 +16,7 @@ function drawCharts(device){
 		//console.log("Device:"+device+" "+host);
 		host.alarms.forEach(function (ele,index,array){
 			//add div 
-			var chartDiv = '<h3>OID: '+ele.oid+'</h3><div id="'+device.split('.',1)[0]+index+'"></div>';
+			var chartDiv = '<h3>OID: '+ele.oid+'</h3><div id="chartDiv'+index+'"></div>';
 			$('#charts').append(chartDiv);
 			drawChart(device,ele.oid,index);
 		});
@@ -27,8 +27,7 @@ function drawChart(hostname,oid,index) {
  	//console.log(hostname+index);
 	var data = new google.visualization.DataTable(),	
  	options = {title: 'Device Performance'},
- 	chartDiv = hostname.split('.',1)[0]+index,
- 	chart = new google.visualization.LineChart(document.getElementById(chartDiv)),
+ 	chart = new google.visualization.LineChart(document.getElementById('chartDiv'+index)),
  	dateFormat = new google.visualization.DateFormat({pattern: "h:mm aa, EEE"});	
 
 
@@ -36,7 +35,7 @@ function drawChart(hostname,oid,index) {
 	data.addColumn('number', 'Value');
 
 	//setInterval('updateChart()', 5000 );
-	$.get('/api/history/',{hostname:'thor.yawnneko.com',oid:'.1.3.6.1.2.1.1.3.0'},function(res){
+	$.get('/api/history/',{hostname:hostname,oid:oid},function(res){
 		for(var i=0;i<res.length;i++){res[i][0]=new Date(res[i][0]);}
 		data.addRows(res);
 		dateFormat.format(data, 0);

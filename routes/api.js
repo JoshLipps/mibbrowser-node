@@ -102,12 +102,14 @@ exports.getHistory = function(req,res) {
         else{
             //console.log(history);
             //history.find().toArray(function(error, docs) { 
-            history.find({hostname:req.query.hostname,oid:req.query.oid}, {'limit':100}).toArray(function(error, docs) { 
+            history.find({hostname:req.query.hostname,oid:req.query.oid}, {$slice: -100,fields:{date:1,response:1}}).toArray(function(error, docs) { 
                 var output = [],i,row =[];
                 if(err){console.log("getHistory error: " + error);}
                 else{
-                    //console.log("History Find");
+                    console.log("History Find");
                     for(i=0;i<docs.length;i++){
+                        console.log(docs[i]);
+
                         row =[docs[i].date,docs[i].response];
                         output[i]=row;
                     }
