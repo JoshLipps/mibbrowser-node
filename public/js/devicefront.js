@@ -42,7 +42,7 @@ function drawChart(hostname,oid,index) {
 		chart.draw(data, options);
 	});
 	}
-
+//Host list item clicked on 
 function activeclick(elem){
     //console.log('The ID of the element which triggered this is: #' + elem.id);
     $(".active").toggleClass("active");
@@ -54,10 +54,22 @@ function activeclick(elem){
     //Fill in config modal
  	fillModal(elem.id); 
 }
+function newHost(){
+	clearModal();
+	$("#myModal").modal('show');
+}
+function clearModal(){
+	$("#oids").children().remove();
+	$('#hostname').val("");
+	$('#community').val('public');
+	$('#port').val(161);
+	addOidRow();
+}
+
 
 function reDrawGraphs(host){
 	$("#charts").children().remove();
-	console.log(host);
+	//console.log(host);
 	drawCharts(host);
 }
 
@@ -75,6 +87,7 @@ function redrawAlarms(id){
     	}
     });
 }
+
 function fillModal(id){
 	$("#oids").children().remove();
 	$.get('api/host',{hostname:id},function(data){
@@ -96,7 +109,7 @@ function fillModal(id){
 				'<td><input class="input-small input-num" type="text" name="clear" value="'+alarm.clear+'""></td>'+
 				'<td><input class="input-small" type="text" name="clearmsg" value="'+alarm.clearmsg+'""></td>'+
 				'<td><select name="state">'+
-					'<option value="success"'+clearstate+'>Success</option>'+
+					'<option value="clear"'+clearstate+'>Clear</option>'+
 					'<option value="warning"'+warningstate+'>Warning</option>'+
 					'<option value="error"'+errorstate+'>Error</option>'+
 				'</select> </td>'+
@@ -116,7 +129,7 @@ function addOidRow(){
 			'<td><input class="input-small input-num" type="text" name="clear"></td>'+
 			'<td><input class="input-small" type="text" name="clearmsg"></td>'+
 			'<td><select name="state">'+
-					'<option value="success">Success</option>'+
+					'<option value="clear">Clear</option>'+
 					'<option value="warning">Warning</option>'+
 					'<option value="error">Error</option>'+
 				'</select> </td>'+

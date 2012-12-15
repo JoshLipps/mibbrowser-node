@@ -72,9 +72,20 @@ exports.postHost = function(req, res) {
     db('mb.devices', function(err, devices){
         var deviceUpdate = {$set:device};
         if(err) console.log("postHost error: " + err);
-        devices.update({hostname:device.hostname}, deviceUpdate,{safe:true}, function(err, result){
-            console.log(device.hostname + " updated. "+result+" Device updated");
-            //res.sent(device.hostname + " updated "+result+" Device updated");
+        devices.findOne({hostname:device.hostname},function(err,host){
+            if(err){console.log("Error finding exsisting host during PostHost");}
+            //console.log(host);
+            if(!host){
+                devices.insert(device,{safe:true}, function(err, result){
+                    console.log(device.hostname + " Inserted. "+result+" Device updated");
+                });
+            } else{
+                devices.update({hostname:device.hostname}, deviceUpdate,{safe:true}, function(err, result){
+                    console.log(device.hostname + " updated. "+result+" Device updated");
+                    //res.sent(device.hostname + " updated "+result+" Device updated");
+                });
+            }
+        
         });
     });  
 };
