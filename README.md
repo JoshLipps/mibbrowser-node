@@ -39,11 +39,10 @@ TODO
 1. Alarms page - links to device page 
 2. Alarms page - updates live
 3. Browser page - Add ucdavis mib
+    snmptranslate -Tz -m UCD-SNMP-MIB::ucdavis |awk -e '{ print $2 "\t" $1}' |sed s/\"//g
 4. Alarms page - Add filter:
 5. Devices page - Congigure a Graph 
 6. Devices page -  Add a new device
 7. Graphs - Click zooming in and out(date filter on api call)
 8. DB - types/names for oids 
 9. Configure Page -Pre-populated oid selections 
-
-

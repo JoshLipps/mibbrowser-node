@@ -1,9 +1,14 @@
 #!/usr/bin/perl
 
-use warnings;
+sub usage() {
+    print("Makes a snmptranslate -Tz into ugly JS.\n");
+    print("\tUsage: $0 inFile outFile\n");
+}
 
 my $filename = shift();
 my $outfile = shift();
+
+if(!defined($filename) | !defined($outfile)) { usage(); exit(1); }
 
 open(MIB, "<", $filename)
     or die("Can't open < $filename.\n");
@@ -16,6 +21,6 @@ while(<MIB>) {
     chomp($desc);
 
     @mib = split(/\./, $oid);
-    
-    print("ucdavis[\"".join("\"][\"",@mib)."\"] = { \"name\": \"$desc\", \"oid\": $oid }\;\n");
+
+    print(JSOUT "ucdavis[\"".join("\"][\"",@mib)."\"] = { \"name\": \"$desc\", \"oid\": $oid }\;\n");
 }
