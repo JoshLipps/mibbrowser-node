@@ -16,20 +16,22 @@ function drawCharts(device){
 		//console.log("Device:"+device+" "+host);
 		host.alarms.forEach(function (ele,index,array){
 			//add div 
-			var chartDiv = '<h3>OID: '+ele.oid+'</h3><div id="chart_div'+index+'"></div>';
+			var chartDiv = '<h3>OID: '+ele.oid+'</h3><div id="'+device.split('.',1)[0]+index+'"></div>';
 			$('#charts').append(chartDiv);
-			drawChart(device.hostname,ele.oid,index);
+			drawChart(device,ele.oid,index);
 		});
 	});
 }
 
 function drawChart(hostname,oid,index) {
+ 	//console.log(hostname+index);
 	var data = new google.visualization.DataTable(),	
  	options = {title: 'Device Performance'},
- 	chart = new google.visualization.LineChart(document.getElementById('chart_div'+index)),
+ 	chartDiv = hostname.split('.',1)[0]+index,
+ 	chart = new google.visualization.LineChart(document.getElementById(chartDiv)),
  	dateFormat = new google.visualization.DateFormat({pattern: "h:mm aa, EEE"});	
 
- 	
+
  	data.addColumn('date', 'Time');
 	data.addColumn('number', 'Value');
 
@@ -48,10 +50,18 @@ function activeclick(elem){
     $(jq(elem.id)).toggleClass("active");
     // refresh alarms
     redrawAlarms(elem.id);
-    //TODO (Re)draw Graphs
-    //TODO fillin modal
+    //(Re)draw Graphs
+    reDrawGraphs(elem.id);
+    //Fill in config modal
  	fillModal(elem.id); 
 }
+
+function reDrawGraphs(host){
+	$("#charts").children().remove();
+	console.log(host);
+	drawCharts(host);
+}
+
 function redrawAlarms(id){
 	$("#alarms").children().remove();
 	$.get('/api/Events',{device:id}, function(data){
