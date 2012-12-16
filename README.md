@@ -21,27 +21,30 @@ Cool things used:
 ----------------
  * express		- 	web application framework for node
  * ejs			-	node.js templating engine
- * vows			-	UnitTest framework
- * initializr	-	HTML5 Boilerplate-ish 
+ * vows			-	UnitTest framework(barely)
  * jquery		-	jQuery ... 
- * jqueryui		-	why not? fun, pretty wigits
+ * bootstrap	-	make it pretty
 
 Install
 -------
-    git clone git://github.com/YeshuaDrake/mibbrowser-node.git
-    cd mibbrowser-node
-    npm install
+   fixthis
 
 
 
 TODO
 ----
-3. Browser page - Add ucdavis mib
-4. Alarms page - Add filter:
-5. Devices page - Configure a Graph 
+1. Alarms/devices page - Live Update
+2. DB - types/names for oids
+3. Label Graphs with name, Get rid of stupid shit on graphs, Add visable points 
+4. Remove a Device
+5. Browser page - Add ucdavis mib 
+6. When removing oids clean history and events
+7. Delete events?
+
+Low:
 6. Graphs - Click zooming in and out(date filter on api call)
-7. DB - types/names for oids 
-9. Remove a Device 
+5. Devices page - Configure a Graph  
+9. Alarms page - Add filter(sorta done with link)
 
 snmptranslate -Tz -m UCD-SNMP-MIB::ucdavis |awk -e '{ print $2 "\t" $1}' |sed s/\"//g
 

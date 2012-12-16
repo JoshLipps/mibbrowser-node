@@ -8,12 +8,12 @@
             <% for(var i=0; i<devices.length; i++) { %>
               <% if(i===0){ %>
                 <li class="active" onclick="activeclick(this)" id="<%=devices[i].hostname%>">
-                  <a href="#"><%= devices[i].hostname %> 
+                  <a href="#<%=devices[i].hostname%>"><%= devices[i].hostname %> 
                       <i class="icon-wrench" onclick=''></i> 
                   </a> 
                 </li>
               <% } else{ %>
-                <li class="" onclick="activeclick(this)" id="<%=devices[i].hostname%>"><a href="#"><%= devices[i].hostname %><i class="icon-wrench"></i></a> </li>
+                <li class="" onclick="activeclick(this)" id="<%=devices[i].hostname%>"><a href="#<%=devices[i].hostname%>"><%= devices[i].hostname %><i class="icon-wrench"></i></a> </li>
               <% } %>
             <% } %>
              <li class="newHostBtn"><button class="btn" onclick="newHost()">New Host</button></li>
