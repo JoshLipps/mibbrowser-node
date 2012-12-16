@@ -53,7 +53,7 @@ app.get('/api/history', api.getHistory);
 
 if(pollEnabled) {
     console.log("Polling Enabled.");
-    //Single out of band poll cycle;
+    //Single out of cycle poll cycle;
     poll.go();
 
     //Poll loop

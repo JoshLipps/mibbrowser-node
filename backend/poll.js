@@ -17,8 +17,8 @@ exports.go = function(){
                 device.alarms.forEach(function(alarm,index,alarms){
                     //poll Oid
                     snmps(device.hostname,device.port,device.community,'get',alarm.oid,function(value){
-                        logHistory(device.hostname,alarm.oid,value);
-                        eventCheck(device,alarm.oid,value);
+                        logHistory(device.hostname,alarm.oid,Number(value));
+                        eventCheck(device,alarm.oid,Number(value));
 
                     });
                 });
