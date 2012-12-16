@@ -43,6 +43,9 @@ function drawChart(hostname,oid,index) {
 
  	data.addColumn('date', 'Time');
 	data.addColumn('number', 'Value');
+	data.addColumn('number', 'Error');
+	data.addColumn('number', 'Warning');
+	data.addColumn('number', 'Clear');
 
 	//setInterval('updateChart()', 5000 );
 	$.get('/api/history/',{hostname:hostname,oid:oid},function(res){

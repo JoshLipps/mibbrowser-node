@@ -114,20 +114,29 @@ exports.getHistory = function(req,res) {
         else{
             //console.log(history);
             //history.find().toArray(function(error, docs) { 
-            history.find({hostname:req.query.hostname,oid:req.query.oid}, {$slice: -100,fields:{date:1,response:1}}).toArray(function(error, docs) { 
-                var output = [],i,row =[];
+            history.find({hostname:req.query.hostname,oid:req.query.oid},{sort:{datestamp:-1},limit:100,fields:{date:1,response:1}}).toArray(function(error, docs) { 
+               
                 if(err){console.log("getHistory error: " + error);}
                 else{
-                    console.log("History Find");
-                    for(i=0;i<docs.length;i++){
-                        //console.log(docs[i]);
-
-                        row =[docs[i].date,docs[i].response];
-                        output[i]=row;
-                    }
-                    res.send(output);
-                    
-                    //res.send(docs);
+                    //find device so we can add alarms threshold lines
+                    db("mb.devices", function(err, devices){ 
+                        if(err) console.log("getHistory error: " + err);
+                        devices.findOne({hostname:req.query.hostname},function(err, host) {
+                            if(err) console.log("getHistory findone error: " + err);
+                            host.alarms.forEach(function (alarm,index){
+                                var output = [],i,row =[];
+                                if(alarm.oid==req.query.oid){
+                                    for(i=0;i<docs.length;i++){
+                                        //last 3 coloms are for theshold lines
+                                        row =[docs[i].date,docs[i].response,Number(alarm.error),Number(alarm.warn),Number(alarm.clear)];
+                                        output[i]=row;
+                                    }
+                                    res.send(output);
+                                }
+                            });
+                        });
+                        
+                    });
                 }
             });
         }
