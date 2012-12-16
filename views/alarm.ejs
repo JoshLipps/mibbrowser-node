@@ -11,7 +11,7 @@
    <tbody id="alarms">
        <% for(var i=0; i<events.length; i++) {%>
           <tr class="<%= events[i].state %>" >
-            <td> <%=events[i].device %> </td>
+            <td> <a href="/devices#<%=events[i].device %>"><%=events[i].device %></a> </td>
             <td> <%=events[i].alarmname %> </td>
             <td> <%=events[i].state %> </td>
             <td> <%=events[i].description %> </td>

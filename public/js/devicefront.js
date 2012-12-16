@@ -2,12 +2,17 @@
 
 
 $(document).ready(function() {
-   //TODO Get first device 
-   var firstDevice = "snmp.yawnneko.com"
+   var firstDevice = "snmp.yawnneko.com";
+   if(window.location.hash) {
+      firstDevice = window.location.hash.replace('#', '');
+      activeclick(document.getElementById(firstDevice));
+   }
+
    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
    $('.icon-remove').live('click', removeOIDRow);
    //fillModal(firstDevice);
    google.setOnLoadCallback(drawCharts(firstDevice));
+
    });
 
 //Draw all charts for a device
@@ -16,7 +21,7 @@ function drawCharts(device){
 		//console.log("Device:"+device+" "+host);
 		host.alarms.forEach(function (ele,index,array){
 			//add div 
-			var chartDiv = '<h3>OID: '+ele.oid+'</h3><div id="chartDiv'+index+'"></div>';
+			var chartDiv = '<h3 id="chartDivLabel'+index+'">OID: '+ele.oid+'</h3><div id="chartDiv'+index+'"></div>';
 			$('#charts').append(chartDiv);
 			drawChart(device,ele.oid,index);
 		});

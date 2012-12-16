@@ -46,6 +46,4 @@ TODO
 8. Configure Page -Pre-populated oid selections 
 9. Remove a Device
 
-
-    snmptranslate -Tz -m UCD-SNMP-MIB::ucdavis |awk -e '{ print $2 "\t" $1}' |sed s/\"//g
-    snmptranslate -Tz -m UCD-SNMP-MIB::ucdavis |awk -e '{ print $2 "\t" $1}' |sed s/\"//g
+snmptranslate -Tz -m UCD-SNMP-MIB::ucdavis |awk -e '{ print $2 "\t" $1}' |sed s/\"//g
