@@ -110,11 +110,12 @@ exports.getEvents = function(req,res) {
 
 exports.getHistory = function(req,res) {
     db("mb.history", function(err, history){
+        var ONE_HOUR = 60 * 60 * 1000; /* ms */
         if(err){console.log("getHistory error: " + err);}
         else{
             //console.log(history);
             //history.find().toArray(function(error, docs) { 
-            history.find({hostname:req.query.hostname,oid:req.query.oid},{sort:{datestamp:-1},limit:100,fields:{date:1,response:1}}).toArray(function(error, docs) { 
+            history.find({hostname:req.query.hostname,oid:req.query.oid,date:{ $gt: new Date()-ONE_HOUR}},{fields:{date:1,response:1}}).toArray(function(error, docs) { 
                
                 if(err){console.log("getHistory error: " + error);}
                 else{
