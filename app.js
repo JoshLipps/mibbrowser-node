@@ -50,6 +50,7 @@ app.get('/api/events', api.getEvents);
 app.get('/api/host', api.getHost);
 app.post('/api/host', api.postHost);
 app.get('/api/history', api.getHistory);
+app.get('/api/supportedOids', api.getSupportedOids);
 
 if(pollEnabled) {
     console.log("Polling Enabled.");

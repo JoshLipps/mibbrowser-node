@@ -133,3 +133,11 @@ exports.getHistory = function(req,res) {
     });
 };
 
+exports.getSupportedOids = function(req, res) {
+    db("mb.supportedOids", function(err, supportedOids){
+        if(err) console.log("getSupportedOids error: " + err);
+        supportedOids.find({},{fields:{"name":1, "oid":1, "_id":0}}).toArray(function(err, oids) {
+            res.send(oids);
+        });
+    });
+}

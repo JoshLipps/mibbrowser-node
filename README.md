@@ -36,14 +36,16 @@ Install
 
 TODO
 ----
-1. Alarms page - links to device page 
-2. Alarms page - updates live
 3. Browser page - Add ucdavis mib
 4. Alarms page - Add filter:
-5. Devices page - Congigure a Graph 
+5. Devices page - Configure a Graph 
 6. Graphs - Click zooming in and out(date filter on api call)
 7. DB - types/names for oids 
-8. Configure Page -Pre-populated oid selections 
-9. Remove a Device
+9. Remove a Device 
 
 snmptranslate -Tz -m UCD-SNMP-MIB::ucdavis |awk -e '{ print $2 "\t" $1}' |sed s/\"//g
+
+DONE
+----
+1. Alarms page - links to device page 
+8. Configure Page -Pre-populated oid selections 

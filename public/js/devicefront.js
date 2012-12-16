@@ -1,5 +1,7 @@
 //alarmsFront.js
 
+var numberOfAlarms = 0; //lawl
+var selectOptions;
 
 $(document).ready(function() {
    var firstDevice = "snmp.yawnneko.com";
@@ -12,8 +14,7 @@ $(document).ready(function() {
    $('.icon-remove').live('click', removeOIDRow);
    //fillModal(firstDevice);
    google.setOnLoadCallback(drawCharts(firstDevice));
-
-   });
+});
 
 //Draw all charts for a device
 function drawCharts(device){
@@ -101,12 +102,10 @@ function fillModal(id){
 		$('#port').val(data.port);
 		for(var j=0;j<data.alarms.length;j++){
 			var alarm = data.alarms[j],errorstate="",warningstate="",clearstate="";
-			if(alarm.state=='error'){errorstate="selected"}
-			else if(alarm.state=='warning'){warningstate="selected"}
-			else{clearstate="selected"}
+            eval(alarm.state+"state='selected'");
 
 			$("#oids").append('<tr >'+
-				'<td><input class="input-small" type="text" name="oid" value="'+alarm.oid+'""></td>'+
+				'<td><select id="oidsSelector'+j+'" class="input-small" type="text" name="oid" value="'+alarm.oid+'""></td>'+
 				'<td><input class="input-small input-num" type="text" name="error" value="'+alarm.error+'""></td>'+
 				'<td><input class="input-small" type="text" name="errormsg" value="'+alarm.errormsg+'""></td>'+
 				'<td><input class="input-small input-num" type="text" name="warn" value="'+alarm.warn+'""></td>'+
@@ -114,32 +113,37 @@ function fillModal(id){
 				'<td><input class="input-small input-num" type="text" name="clear" value="'+alarm.clear+'""></td>'+
 				'<td><input class="input-small" type="text" name="clearmsg" value="'+alarm.clearmsg+'""></td>'+
 				'<td><select name="state">'+
-					'<option value="clear"'+clearstate+'>Clear</option>'+
-					'<option value="warning"'+warningstate+'>Warning</option>'+
-					'<option value="error"'+errorstate+'>Error</option>'+
+                    '<option value="clear" '+clearstate+'>Clear</option>'+
+					'<option value="warning" '+warningstate+'>Warning</option>'+
+					'<option value="error" '+errorstate+'>Error</option>'+
 				'</select> </td>'+
 				'<td><i class="icon-remove"></i></td>'+
 				'</tr>');
+            fillOidsSelector(j, alarm.oid); 
+
 		}
+        numberOfAlarms = data.alarms.length;
 	});
 }
 
 function addOidRow(){
-		$("#oids").append('<tr>'+
-			'<td><input class="input-small" type="text" name="oid"></td>'+
-			'<td><input class="input-small input-num" type="text" name="error"></td>'+
-			'<td><input class="input-small" type="text" name="errormsg"></td>'+
-			'<td><input class="input-small input-num" type="text" name="warn"></td>'+
-			'<td><input class="input-small" type="text" name="warnmsg"></td>'+
-			'<td><input class="input-small input-num" type="text" name="clear"></td>'+
-			'<td><input class="input-small" type="text" name="clearmsg"></td>'+
-			'<td><select name="state">'+
-					'<option value="clear">Clear</option>'+
-					'<option value="warning">Warning</option>'+
-					'<option value="error">Error</option>'+
-				'</select> </td>'+
-			'<td><i class="icon-remove"></i></td>'+
-			'</tr>');
+	$("#oids").append('<tr>'+
+		'<td><select id="oidsSelector'+numberOfAlarms+'" class="input-small" type="text" name="oid"></select></td>'+
+		'<td><input class="input-small input-num" type="text" name="error"></td>'+
+		'<td><input class="input-small" type="text" name="errormsg"></td>'+
+		'<td><input class="input-small input-num" type="text" name="warn"></td>'+
+		'<td><input class="input-small" type="text" name="warnmsg"></td>'+
+		'<td><input class="input-small input-num" type="text" name="clear"></td>'+
+		'<td><input class="input-small" type="text" name="clearmsg"></td>'+
+		'<td><select name="state">'+
+				'<option value="clear">Clear</option>'+
+				'<option value="warning">Warning</option>'+
+				'<option value="error">Error</option>'+
+			'</select> </td>'+
+		'<td><i class="icon-remove"></i></td>'+
+		'</tr>');
+    fillOidsSelector(numberOfAlarms, "");
+    numberOfAlarms++;
 }
 
 function removeOIDRow(){
@@ -176,4 +180,22 @@ function postHost() {
 
     //console.log(host);
     $.post("api/host",host);
+}
+
+function deleteHost() {
+    alert("Lucky you, this doesn't do anything yet.");
+}
+
+function fillOidsSelector(index, oid) {
+    if(typeof(selectOptions) === 'undefined') {
+        selectOptions="";
+        $.getJSON("/api/supportedOids", function(data){
+            for(i=0; i < data.length; i++) {
+                selectOptions+="<option value="+data[i].oid
+                    +(data[i].oid === oid?" selected ":"")
+                    +">"+data[i].name+"</option>\n";
+            }
+            $("#oidsSelector"+index).append(selectOptions);
+        });
+    } else { $("#oidsSelector"+index).append(selectOptions); }
 }
