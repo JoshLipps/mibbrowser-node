@@ -51,6 +51,7 @@ app.get('/api/host', api.getHost);
 app.post('/api/host', api.postHost);
 app.get('/api/history', api.getHistory);
 app.get('/api/supportedOids', api.getSupportedOids);
+app.get('/api/ping', api.ping);
 
 if(pollEnabled) {
     console.log("Polling Enabled.");

@@ -93,7 +93,7 @@ function redrawAlarms(id){
             	'<td> '+data[i].state+'</td>'+
             	'<td> '+data[i].description+'</td>'+
             	'<td> '+data[i].value+'</td>'+
-            	'<td> '+data[i].datestamp+'</td> </tr>');
+            	'<td> '+new Date(data[i].datestamp)+'</td> </tr>');
 
     	}
     });

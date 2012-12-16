@@ -132,6 +132,10 @@ exports.getHistory = function(req,res) {
         }
     });
 };
+exports.ping = function(req, res) {
+    res.sent("pong");
+    console.log("Mark -- Pong");
+}
 
 exports.getSupportedOids = function(req, res) {
     db("mb.supportedOids", function(err, supportedOids){
