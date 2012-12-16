@@ -4,16 +4,13 @@ var numberOfAlarms = 0; //lawl
 var selectOptions;
 
 $(document).ready(function() {
-   var firstDevice = "snmp.yawnneko.com";
-   if(window.location.hash) {
-      firstDevice = window.location.hash.replace('#', '');
-      activeclick(document.getElementById(firstDevice));
-   }
+   var firstDevice = window.location.hash ? 
+      window.location.hash.replace('#', '') : "snmp.yawnneko.com";
 
    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
    $('.icon-remove').live('click', removeOIDRow);
    //fillModal(firstDevice);
-   google.setOnLoadCallback(drawCharts(firstDevice));
+   google.setOnLoadCallback(activeclick(document.getElementById(firstDevice)));
 });
 
 //Draw all charts for a device
