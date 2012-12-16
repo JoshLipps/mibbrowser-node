@@ -85,6 +85,7 @@ function redrawAlarms(id){
             	'<td> '+data[i].alarmname+'</td>'+
             	'<td> '+data[i].state+'</td>'+
             	'<td> '+data[i].description+'</td>'+
+            	'<td> '+data[i].value+'</td>'+
             	'<td> '+data[i].datestamp+'</td> </tr>');
 
     	}
@@ -97,12 +98,12 @@ function fillModal(id){
 		$('#hostname').val(data.hostname);
 		$('#community').val(data.community);
 		$('#port').val(data.port);
-		for(var j=0;j<data.alarms.length;j++){
-			var alarm = data.alarms[j],errorstate="",warningstate="",clearstate="";
+		data.alarms.forEach(function (alarm,index,array){
+			var errorstate="",warningstate="",clearstate="";
             eval(alarm.state+"state='selected'");
 
 			$("#oids").append('<tr >'+
-				'<td><select id="oidsSelector'+j+'" class="input-small" type="text" name="oid"></td>'+
+				'<td><select id="oidsSelector'+index+'" class="input-small" type="text" name="oid"></td>'+
 				'<td><input class="input-small input-num" type="text" name="error" value="'+alarm.error+'""></td>'+
 				'<td><input class="input-small" type="text" name="errormsg" value="'+alarm.errormsg+'""></td>'+
 				'<td><input class="input-small input-num" type="text" name="warn" value="'+alarm.warn+'""></td>'+
@@ -116,9 +117,9 @@ function fillModal(id){
 				'</select> </td>'+
 				'<td><i class="icon-remove"></i></td>'+
 				'</tr>');
-            fillOidsSelector(j, alarm.oid); 
+            fillOidsSelector(index, alarm.oid); 
 
-		}
+		});
         numberOfAlarms = data.alarms.length;
 	});
 }

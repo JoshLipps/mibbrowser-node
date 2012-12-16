@@ -38,6 +38,7 @@ function updateState(name,oid,state){
     //MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
     db('mb.devices', function(err, devices){
         if(err) console.log("updateStatus error: " + err);
+        //this can cause a problem with 2 oids as it can falsely change states that were changed since generation of device change to findandmodify 
         devices.update({hostname:name.hostname}, name, {w:1}, function(){
             console.log(name.hostname + " updated.");
         });
@@ -66,40 +67,54 @@ function eventCheck(host,oid,value){
     host.alarms.forEach(function (alarm,index,alarms){
             //console.log("Event Check - Oid found ");
             //determine pos/neg thresholds by testing min(clear,error);
-        if(alarm.clear<alarm.error){
-            if(value<alarm.error&&alarm.state!='error')
-            {
-                createEvent(host.hostname,oid,'error',alarm.errormsg,value);
-                alarm.state = "error";
-                updateState(host,oid,"error");
+        if(alarm.oid==oid){
+            //Haha Input validation fail;
+            alarm.error = Number(alarm.error);
+            alarm.warning = Number(alarm.warning);
+            alarm.clear = Number(alarm.clear);
+            //clear less than error means low is good
 
-            }else if(value<alarm.warn&&alarm.state!='error'){
-                createEvent(host.hostname,oid,'warning',alarm.warnmsg,value);
-                alarm.state = "warn";
-                updateState(host,oid,"warn");
-            }
-            else if(value>alarm.clear && alarm.state!=="clear"){
-                createEvent(host.hostname,oid,'success',alarm.clearmsg,value);
-                alarm.state = "clear";
-                updateState(host,oid,"clear");
-            }
-        } else {
+            if(alarm.clear < alarm.error){
+                //console.log("Lower is better "+host.hostname+ "oid:"+ oid);
+                //console.log("Error: "+alarm.error+ typeof alarm.error);
+                //console.log("Clear: "+alarm.clear+ typeof alarm.clear);
+                //console.log(alarm.clear < alarm.error);
                 if(value>alarm.error&&alarm.state!='error')
                 {
                     createEvent(host.hostname,oid,'error',alarm.errormsg,value);
                     alarm.state = "error";
                     updateState(host,oid,"error");
 
-                }else if(value>alarm.warn&&alarm.state!='error'){
+                }else if(value>alarm.warn&&alarm.state!='warning'&&alarm.state!='error'){
                     createEvent(host.hostname,oid,'warning',alarm.warnmsg,value);
-                    alarm.state = "warn";
-                    updateState(host,oid,"warn");
+                    alarm.state = "warning";
+                    updateState(host,oid,"warning");
                 }
                 else if(value<alarm.clear && alarm.state!=="clear"){
                     createEvent(host.hostname,oid,'success',alarm.clearmsg,value);
                     alarm.state = "clear";
                     updateState(host,oid,"clear");
                 }
+            } else {
+                //clear higher than error means high is good 
+                //console.log("Higher is better "+host.hostname);
+                    if(value<alarm.error&&alarm.state!='error')
+                    {
+                        createEvent(host.hostname,oid,'error',alarm.errormsg,value);
+                        alarm.state = "error";
+                        updateState(host,oid,"error");
+
+                    }else if(value<alarm.warn&&alarm.state!='warning'&&alarm.state!='error'){
+                        createEvent(host.hostname,oid,'warning',alarm.warnmsg,value);
+                        alarm.state = "warning";
+                        updateState(host,oid,"warning");
+                    }
+                    else if(value>alarm.clear && alarm.state!=="clear"){
+                        createEvent(host.hostname,oid,'success',alarm.clearmsg,value);
+                        alarm.state = "clear";
+                        updateState(host,oid,"clear");
+                    }
+            }
         }
     });
 }
@@ -130,6 +145,7 @@ var  snmps = function(host,port,community,action,requestedOid,callback){
                 console.log('Fail :( error:'+error+" Host: "+host); // lawl
             } else {
                 //console.log(varbind[0].value);
+                //TODO Handle error mesages
                 callback(varbind[0].value);
             }
             session.close();
