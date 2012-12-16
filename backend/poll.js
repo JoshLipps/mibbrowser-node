@@ -45,14 +45,14 @@ function updateState(name,oid,state){
 
 
 }
-function createEvent(name,oid,state,msg){
+function createEvent(name,oid,state,msg,value){
   //  console.log("createEvent");
     //var MongoClient = require('mongodb').MongoClient;
     //MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
     var time = new Date();
     db('mb.events', function(err, events){
         if(err) console.log("createEvent error: " + err);
-        events.insert({device:name,alarmname:oid,state:state,description:msg,datestamp:time}, function(){
+        events.insert({device:name,alarmname:oid,state:state,description:msg,datestamp:time,value:value}, function(){
             console.log("Event for " + name + ", " + oid + " created.");
         });
     });
@@ -66,37 +66,37 @@ function eventCheck(host,oid,value){
     host.alarms.forEach(function (alarm,index,alarms){
             //console.log("Event Check - Oid found ");
             //determine pos/neg thresholds by testing min(clear,error);
-        if(alarm.clear>alarm.error){
+        if(alarm.clear<alarm.error){
             if(value<alarm.error&&alarm.state!='error')
             {
-                createEvent(host.hostname,oid,'error',alarm.errormsg);
+                createEvent(host.hostname,oid,'error',alarm.errormsg,value);
                 alarm.state = "error";
                 updateState(host,oid,"error");
 
             }else if(value<alarm.warn&&alarm.state!='error'){
-                createEvent(host.hostname,oid,'warning',alarm.warnmsg);
+                createEvent(host.hostname,oid,'warning',alarm.warnmsg,value);
                 alarm.state = "warn";
                 updateState(host,oid,"warn");
             }
             else if(value>alarm.clear && alarm.state!=="clear"){
-                createEvent(host.hostname,oid,'success',alarm.clearmsg);
+                createEvent(host.hostname,oid,'success',alarm.clearmsg,value);
                 alarm.state = "clear";
                 updateState(host,oid,"clear");
             }
         } else {
                 if(value>alarm.error&&alarm.state!='error')
                 {
-                    createEvent(host.hostname,oid,'error',alarm.errormsg);
+                    createEvent(host.hostname,oid,'error',alarm.errormsg,value);
                     alarm.state = "error";
                     updateState(host,oid,"error");
 
                 }else if(value>alarm.warn&&alarm.state!='error'){
-                    createEvent(host.hostname,oid,'warning',alarm.warnmsg);
+                    createEvent(host.hostname,oid,'warning',alarm.warnmsg,value);
                     alarm.state = "warn";
                     updateState(host,oid,"warn");
                 }
                 else if(value<alarm.clear && alarm.state!=="clear"){
-                    createEvent(host.hostname,oid,'success',alarm.clearmsg);
+                    createEvent(host.hostname,oid,'success',alarm.clearmsg,value);
                     alarm.state = "clear";
                     updateState(host,oid,"clear");
                 }
