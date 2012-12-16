@@ -1,7 +1,7 @@
 //alarmsFront.js
 
 var numberOfAlarms = 0; //lawl
-var selectOptions;
+//var selectOptions;
 
 $(document).ready(function() {
    var firstDevice = window.location.hash ? 
@@ -184,15 +184,17 @@ function deleteHost() {
 }
 
 function fillOidsSelector(index, oid) {
-    if(typeof(selectOptions) === 'undefined') {
-        selectOptions="";
+	//commented out becaue otherwise it doesn't select properly accross devices
+    //if(typeof(selectOptions) === 'undefined') {
+       var selectOptions="";
         $.getJSON("/api/supportedOids", function(data){
-            for(i=0; i < data.length; i++) {
+            for(var i=0; i < data.length; i++) {
                 selectOptions+="<option value="+data[i].oid
                     +(data[i].oid === oid?" selected ":"")
                     +">"+data[i].name+"</option>\n";
             }
+			//console.log("index "+ index+ "alarm.oid" +oid);
             $("#oidsSelector"+index).append(selectOptions);
         });
-    } else { $("#oidsSelector"+index).append(selectOptions); }
+    //} else { $("#oidsSelector"+index).append(selectOptions); }
 }
