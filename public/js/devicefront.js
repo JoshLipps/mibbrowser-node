@@ -102,14 +102,14 @@ function fillModal(id){
             eval(alarm.state+"state='selected'");
 
 			$("#oids").append('<tr >'+
-				'<td><select id="oidsSelector'+j+'" class="input-small" type="text" name="oid" value="'+alarm.oid+'""></td>'+
+				'<td><select id="oidsSelector'+j+'" class="input-small" type="text" name="oid"></td>'+
 				'<td><input class="input-small input-num" type="text" name="error" value="'+alarm.error+'""></td>'+
 				'<td><input class="input-small" type="text" name="errormsg" value="'+alarm.errormsg+'""></td>'+
 				'<td><input class="input-small input-num" type="text" name="warn" value="'+alarm.warn+'""></td>'+
 				'<td><input class="input-small" type="text" name="warnmsg" value="'+alarm.warnmsg+'""></td>'+
 				'<td><input class="input-small input-num" type="text" name="clear" value="'+alarm.clear+'""></td>'+
 				'<td><input class="input-small" type="text" name="clearmsg" value="'+alarm.clearmsg+'""></td>'+
-				'<td><select name="state">'+
+				'<td><select id="state" name="state">'+
                     '<option value="clear" '+clearstate+'>Clear</option>'+
 					'<option value="warning" '+warningstate+'>Warning</option>'+
 					'<option value="error" '+errorstate+'>Error</option>'+
@@ -132,7 +132,7 @@ function addOidRow(){
 		'<td><input class="input-small" type="text" name="warnmsg"></td>'+
 		'<td><input class="input-small input-num" type="text" name="clear"></td>'+
 		'<td><input class="input-small" type="text" name="clearmsg"></td>'+
-		'<td><select name="state">'+
+		'<td><select id="state" name="state">'+
 				'<option value="clear">Clear</option>'+
 				'<option value="warning">Warning</option>'+
 				'<option value="error">Error</option>'+
@@ -170,8 +170,8 @@ function postHost() {
 			oid[name] = value;
 		});
 		//grab state dropdown
-		oid['state'] = $(row).find('select').val();
-
+		oid['oid'] = $(row).find('#oidsSelector'+rowIndex).val();
+		oid['state'] = $(row).find('#state').val();
 		host.alarms[rowIndex]=oid;
 	});
 

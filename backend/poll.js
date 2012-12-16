@@ -16,11 +16,15 @@ exports.go = function(){
                 //poll each alarm
                 device.alarms.forEach(function(alarm,index,alarms){
                     //poll Oid
-                    snmps(device.hostname,device.port,device.community,'get',alarm.oid,function(value){
-                        logHistory(device.hostname,alarm.oid,Number(value));
-                        eventCheck(device,alarm.oid,Number(value));
-
-                    });
+                    if(alarm.oid){
+                        console.log(device.hostname+" "+alarm.oid);
+                        snmps(device.hostname,device.port,device.community,'get',alarm.oid,function(value){
+                            logHistory(device.hostname,alarm.oid,Number(value));
+                            eventCheck(device,alarm.oid,Number(value));
+                        });
+                    } else{
+                        console.log("Empty alarm element on device "+device.hostname);
+                    }
                 });
             }
         });
