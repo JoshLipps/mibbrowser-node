@@ -63,28 +63,45 @@ function eventCheck(host,oid,value){
     //var time = new Date();
     //console.log({hostname:name});
                 //console.log();
-    for(var i=0;i<host.alarms.length;i++){
-        if(oid===host.alarms[i].oid){
+    host.alarms.forEach(function (alarm,index,alarms){
             //console.log("Event Check - Oid found ");
-            if(value<host.alarms[i].error)
+            //determine pos/neg thresholds by testing min(clear,error);
+        if(alarm.clear>alarm.error){
+            if(value<alarm.error&&alarm.state!='error')
             {
-                createEvent(host.hostname,oid,'error',host.alarms[i].errormsg);
-                host.alarms[i].state = "error";
+                createEvent(host.hostname,oid,'error',alarm.errormsg);
+                alarm.state = "error";
                 updateState(host,oid,"error");
 
-            }else if(value<host.alarms[i].warn){
-                createEvent(host.hostname,oid,'warning',host.alarms[i].warnmsg);
-                host.alarms[i].state = "warn";
+            }else if(value<alarm.warn&&alarm.state!='error'){
+                createEvent(host.hostname,oid,'warning',alarm.warnmsg);
+                alarm.state = "warn";
                 updateState(host,oid,"warn");
             }
-            else if(value>host.alarms[i].clear && host.alarms[i].state!=="clear"){
-                createEvent(host.hostname,oid,'success',host.alarms[i].clearmsg);
-                host.alarms[i].state = "clear";
+            else if(value>alarm.clear && alarm.state!=="clear"){
+                createEvent(host.hostname,oid,'success',alarm.clearmsg);
+                alarm.state = "clear";
                 updateState(host,oid,"clear");
             }
-    
+        } else {
+                if(value>alarm.error&&alarm.state!='error')
+                {
+                    createEvent(host.hostname,oid,'error',alarm.errormsg);
+                    alarm.state = "error";
+                    updateState(host,oid,"error");
+
+                }else if(value>alarm.warn&&alarm.state!='error'){
+                    createEvent(host.hostname,oid,'warning',alarm.warnmsg);
+                    alarm.state = "warn";
+                    updateState(host,oid,"warn");
+                }
+                else if(value<alarm.clear && alarm.state!=="clear"){
+                    createEvent(host.hostname,oid,'success',alarm.clearmsg);
+                    alarm.state = "clear";
+                    updateState(host,oid,"clear");
+                }
         }
-    }
+    });
 }
 
 function logHistory(name,oid,value){

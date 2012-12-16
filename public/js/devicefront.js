@@ -81,7 +81,7 @@ function redrawAlarms(id){
 	$.get('/api/Events',{device:id}, function(data){
     	for(var i=0;i<data.length;i++){
     		$("#alarms").append('<tr class="'+data[i].state+'" >'+
-    			'<td> '+data[i].device+'</td>'+
+    			'<td><a href="/devices#'+data[i].device+'"> '+data[i].device+'</a></td>'+
             	'<td> '+data[i].alarmname+'</td>'+
             	'<td> '+data[i].state+'</td>'+
             	'<td> '+data[i].description+'</td>'+
