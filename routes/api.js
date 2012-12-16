@@ -77,12 +77,13 @@ exports.postHost = function(req, res) {
             //console.log(host);
             if(!host){
                 devices.insert(device,{safe:true}, function(err, result){
-                    console.log(device.hostname + " Inserted. "+result+" Device updated");
+                    console.log(device.hostname + " Inserted. "+result+" Device Inserted");
+                    res.send(device.hostname + " updated "+result+" Device Inserted");
                 });
             } else{
                 devices.update({hostname:device.hostname}, deviceUpdate,{safe:true}, function(err, result){
                     console.log(device.hostname + " updated. "+result+" Device updated");
-                    //res.sent(device.hostname + " updated "+result+" Device updated");
+                    res.send(device.hostname + " updated "+result+" Device updated");
                 });
             }
         
@@ -133,7 +134,7 @@ exports.getHistory = function(req,res) {
     });
 };
 exports.ping = function(req, res) {
-    res.sent("pong");
+    res.send("pong");
     console.log("Mark -- Pong");
 }
 
