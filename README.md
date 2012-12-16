@@ -35,7 +35,6 @@ TODO
 ----
 1. Alarms/devices page - Live Update
 2. DB - types/names for oids
-3. Label Graphs with name, Get rid of stupid shit on graphs, Add visable points 
 4. Remove a Device
 5. Browser page - Add ucdavis mib 
 6. When removing oids clean history and events
@@ -50,5 +49,6 @@ snmptranslate -Tz -m UCD-SNMP-MIB::ucdavis |awk -e '{ print $2 "\t" $1}' |sed s/
 
 DONE
 ----
+3. Label Graphs with name, Get rid of stupid shit on graphs, Add visable points 
 1. Alarms page - links to device page 
 8. Configure Page -Pre-populated oid selections 

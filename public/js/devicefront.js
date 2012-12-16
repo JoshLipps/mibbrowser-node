@@ -19,9 +19,16 @@ function drawCharts(device){
 		//console.log("Device:"+device+" "+host);
 		host.alarms.forEach(function (ele,index,array){
 			//add div 
-			var chartDiv = '<h3 id="chartDivLabel'+index+'">OID: '+ele.oid+'</h3><div id="chartDiv'+index+'"></div>';
-			$('#charts').append(chartDiv);
-			drawChart(device,ele.oid,index);
+			$.getJSON("/api/supportedOids", function(data){
+				data.forEach(function(oidname){
+					var chartDiv;
+					if(oidname.oid==ele.oid){
+						chartDiv = '<h4 id="chartDivLabel'+index+'">'+oidname.name+'</h4><div id="chartDiv'+index+'"></div>';
+						$('#charts').append(chartDiv);
+						drawChart(device,ele.oid,index);
+					}
+				});
+			});
 		});
 	});
 }
@@ -29,7 +36,7 @@ function drawCharts(device){
 function drawChart(hostname,oid,index) {
  	//console.log(hostname+index);
 	var data = new google.visualization.DataTable(),	
- 	options = {title: 'Device Performance'},
+ 	options = {is3D: true,'fill': 30,'legend': 'none'},
  	chart = new google.visualization.LineChart(document.getElementById('chartDiv'+index)),
  	dateFormat = new google.visualization.DateFormat({pattern: "h:mm aa, EEE"});	
 

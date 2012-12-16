@@ -32,6 +32,9 @@ margin-top: 2px;
 margin-right: -6px;
 opacity: .25;
 }
+svg{
+  border-radius: 4px;
+}
 .bs-docs-sidenav .icon-wrench {
 float: right;
 margin-top: 2px;
