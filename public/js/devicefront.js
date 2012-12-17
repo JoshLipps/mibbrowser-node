@@ -6,7 +6,12 @@ var numberOfAlarms = 0; //lawl
 $(document).ready(function() {
    var firstDevice = window.location.hash ? 
       window.location.hash.replace('#', '') : "snmp.yawnneko.com";
-
+   $('.oids-drop').live('change',function(event){
+   		//this
+   		$(this).parent().next().children().val($(this).val());//.children('input[name="oid"]').attr('name'));
+   		//console.log($(this).val());
+   		//console.log("HI Change:warningstate");
+   });
    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
    $('.icon-remove').live('click', removeOIDRow);
    //fillModal(firstDevice);
@@ -113,7 +118,8 @@ function fillModal(id){
             eval(alarm.state+"state='selected'");
 
 			$("#oids").append('<tr >'+
-				'<td><select id="oidsSelector'+index+'" class="input-small" type="text" name="oid"></td>'+
+				'<td><select id="oidsSelector'+index+'" class="oids-drop input-small" type="text"></select></td>'+
+				'<td><input class="input-small" name="oid" type="text" value="'+alarm.oid+'"></div></td>'+
 				'<td><input class="input-small input-num" type="text" name="error" value="'+alarm.error+'""></td>'+
 				'<td><input class="input-small" type="text" name="errormsg" value="'+alarm.errormsg+'""></td>'+
 				'<td><input class="input-small input-num" type="text" name="warn" value="'+alarm.warn+'""></td>'+
@@ -136,7 +142,8 @@ function fillModal(id){
 
 function addOidRow(){
 	$("#oids").append('<tr>'+
-		'<td><select id="oidsSelector'+numberOfAlarms+'" class="input-small" type="text" name="oid"></select></td>'+
+		'<td><select id="oidsSelector'+numberOfAlarms+'" class="oids-drop input-small" type="text" name="oid"></select></td>'+
+		'<td><input class="input-small" name="oid" type="text" value=></div></td>'+	
 		'<td><input class="input-small input-num" type="text" name="error"></td>'+
 		'<td><input class="input-small" type="text" name="errormsg"></td>'+
 		'<td><input class="input-small input-num" type="text" name="warn"></td>'+
@@ -181,7 +188,8 @@ function postHost() {
 			oid[name] = value;
 		});
 		//grab state dropdown
-		oid['oid'] = $(row).find('#oidsSelector'+rowIndex).val();
+		//oid['oid'] = $(row).find('#oidsSelector'+rowIndex).val();
+		//oid['oid'] = $(row).find('oid').val();
 		oid['state'] = $(row).find('#state').val();
 		host.alarms[rowIndex]=oid;
 	});
