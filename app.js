@@ -54,14 +54,14 @@ app.get('/api/supportedOids', api.getSupportedOids);
 app.get('/api/ping', api.ping);
 
 if(pollEnabled) {
-    console.log("Polling Enabled.");
+    if (process.env.DEBUG) console.log("Polling Enabled.");
     //Single out of cycle poll cycle;
     poll.go();
 
     //Poll loop
     loop = setInterval(function(){
     var time = new Date();
-        console.log("Interval " + time.toString());
+        if (process.env.DEBUG) console.log("Interval " + time.toString());
         poll.go();
     }, 30000);
 } else { console.log("Polling Disabled."); }

@@ -10,7 +10,7 @@ var snmp = require('snmp-native'),
 
 exports.snmpget = function(req, res){
 
-    console.log(req.query);
+    if (process.env.DEBUG) console.log(req.query);
     var session,
     requestedOid = req.query.oid;
 
@@ -25,7 +25,7 @@ exports.snmpget = function(req, res){
                 console.log('Fail :('); // lawl
             } else {
                 res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
-                console.log('The system response is "' + vb.value + '" (oid: ' + vb.oid + ')');
+                if(process.env.DEBUG) console.log('The system response is "' + vb.value + '" (oid: ' + vb.oid + ')');
             }
         });
     }
@@ -36,7 +36,7 @@ exports.snmpget = function(req, res){
                 console.log('Fail :('); // lawl
             } else {
                 res.send(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
-                console.log('The system response is  "' + vb.value + '" (oid: ' + vb.oid + ')');
+                if(process.env.DEBUG) console.log('The system response is  "' + vb.value + '" (oid: ' + vb.oid + ')');
             }
         });
     }
@@ -47,9 +47,8 @@ exports.snmpget = function(req, res){
                 console.log('Fail :('); // lawl
             } else {
                 varbind.forEach(function (vb) {
-
                     response += '<p>'+ vb.oid + ' = ' + vb.value + ' (' + vb.type + ')'+'</p>';
-                    console.log(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
+                    if(process.env.DEBUG) console.log(vb.oid + ' = ' + vb.value + ' (' + vb.type + ')');
                 });
                 res.send(response);
             }
@@ -77,12 +76,12 @@ exports.postHost = function(req, res) {
             //console.log(host);
             if(!host){
                 devices.insert(device,{safe:true}, function(err, result){
-                    console.log(device.hostname + " Inserted. "+result+" Device Inserted");
+                    if(process.env.DEBUG) console.log(device.hostname + " Inserted. "+result+" Device Inserted");
                     res.send(device.hostname + " updated "+result+" Device Inserted");
                 });
             } else{
                 devices.update({hostname:device.hostname}, deviceUpdate,{safe:true}, function(err, result){
-                    console.log(device.hostname + " updated. "+result+" Device updated");
+                    if(process.env.DEBUG) console.log(device.hostname + " updated. "+result+" Device updated");
                     res.send(device.hostname + " updated "+result+" Device updated");
                 });
             }
@@ -102,12 +101,20 @@ exports.getHost = function(req,res) {
 exports.getEvents = function(req,res) {
     db("mb.events", function(err, events){
         if(err) console.log("getEvents error: " + err);
-        if(req.query.device){
+        if(req.query.device && req.query.datestamp) {
+            if(process.env.DEBUG) console.log("Check for alarms on "+req.query.device+" since: "+ new Date(Number(req.query.datestamp)));
+            events.find({
+                device:req.query.device, 
+                datestamp: { $gte: new Date(Number(req.query.datestamp)) }
+            }, { sort:{ datestamp:-1 } }).toArray(function(err, docs) {
+                res.send(docs);
+               });
+        } else if(req.query.device){
             events.find({device:req.query.device},{sort:{datestamp:-1}}).toArray(function(err, docs) {
                 res.send(docs);
             });
         } else if(req.query.datestamp) {
-            console.log("Check for alarms since: "+ new Date(Number(req.query.datestamp)));
+            if(process.env.DEBUG) console.log("Check for alarms since: "+ new Date(Number(req.query.datestamp)));
             events.find({datestamp: { $gte: new Date(Number(req.query.datestamp))}},{sort:{datestamp:-1}}).toArray(function(err, docs) {
                 res.send(docs);
             });

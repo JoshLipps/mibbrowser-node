@@ -13,7 +13,7 @@ var mongoCache = function(mongoUri){
     // check if we already have this db connection open
     if(mongoDatabases[mongoUri]){
       readyCallback(null, mongoDatabases[mongoUri]);
-      console.log("Duplicate DB request");
+      if (process.env.DEBUG) console.log("Duplicate DB request");
       return;
     }
 
@@ -22,7 +22,7 @@ var mongoCache = function(mongoUri){
     db.connect(mongoUri, function(error, databaseConnection){
       if(error) throw error;
 
-      console.log("Connected! This shouldn't show up too often.");
+      if (process.env.DEBUG) console.log("Connected! This shouldn't show up too often.");
       // add the database to the cache
       mongoDatabases[mongoUri] = databaseConnection;
 

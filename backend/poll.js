@@ -17,7 +17,7 @@ exports.go = function(){
                 device.alarms.forEach(function(alarm,index,alarms){
                     //poll Oid
                     if(alarm.oid){
-                        console.log(device.hostname+" "+alarm.oid);
+                        if(process.env.DEBUG) console.log(device.hostname+" "+alarm.oid);
                         snmps(device.hostname,device.port,device.community,'get',alarm.oid,function(value){
                             logHistory(device.hostname,alarm.oid,Number(value));
                             eventCheck(device,alarm.oid,Number(value));
@@ -33,14 +33,14 @@ exports.go = function(){
 
 
 function updateState(name,oid,state){
-    console.log("Update State"+JSON.stringify(name));
+    if(process.env.DEBUG) console.log("Update State"+JSON.stringify(name));
     //var MongoClient = require('mongodb').MongoClient;
     //MongoClient.connect(process.env.MONGOLAB_URI, function(err, db) {
     db('mb.devices', function(err, devices){
         if(err) console.log("updateStatus error: " + err);
         //this can cause a problem with 2 oids as it can falsely change states that were changed since generation of device change to findandmodify 
         devices.update({hostname:name.hostname}, name, {w:1}, function(){
-            console.log(name.hostname + " updated.");
+            if(process.env.DEBUG) console.log(name.hostname + " updated.");
         });
     });  
 
@@ -54,7 +54,7 @@ function createEvent(name,oid,state,msg,value){
     db('mb.events', function(err, events){
         if(err) console.log("createEvent error: " + err);
         events.insert({device:name,alarmname:oid,state:state,description:msg,datestamp:time,value:value}, function(){
-            console.log("Event for " + name + ", " + oid + " created.");
+            if(process.env.DEBUG) console.log("Event for " + name + ", " + oid + " created.");
         });
     });
 }
@@ -129,7 +129,7 @@ function logHistory(name,oid,value){
     db('mb.history', function(err, history){
         if(err) console.log("logHistory error: " + err);
         history.insert({hostname:name,oid:oid,date:time.getTime(),response:value},{w:1},function(){
-            console.log("logHistory: event added for " + name + ":" + oid + ":" + value + ".");
+            if(process.env.DEBUG) console.log("logHistory: event added for " + name + ":" + oid + ":" + value + ".");
         });
     });
 }
