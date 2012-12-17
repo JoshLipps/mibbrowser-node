@@ -1,11 +1,11 @@
 $(document).ready(function(){
     getNewAlarms(new Date());
-    setInterval("getNewAlarms(new Date())", 10000);
+    setInterval("getNewAlarms(new Date())", 30000);
 });
 
 function getNewAlarms(lastCheckTime) {
     var i, eventsHTML = "";
-    $.getJSON("api/events", {datestamp:lastCheckTime.setSeconds(lastCheckTime.getSeconds()-10)}, function(events){
+    $.getJSON("api/events", {datestamp:lastCheckTime.setSeconds(lastCheckTime.getSeconds()-30)}, function(events){
         for (i = 0; i<events.length; i++) {
             eventsHTML+= "<tr class=\""+events[i].state+"\">"
             +"<td><a href=\"/devices#"+events[i].device+"\">"+events[i].device+"</a></td>"
