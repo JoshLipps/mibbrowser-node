@@ -11,13 +11,13 @@
    </thead>
    <tbody id="alarms">
        <% for(var i=0; i<events.length; i++) {%>
-          <tr class="<%= events[i].state %>" >
-            <td> <a href="/devices#<%=events[i].device %>"><%=events[i].device %></a> </td>
-            <td> <%=events[i].alarmname %> </td>
-            <td> <%=events[i].state %> </td>
-            <td> <%=events[i].description %> </td>
-            <td> <%=events[i].value %> </td>
-            <td> <%=events[i].datestamp %> </td> </tr>
+          <tr class="<%=events[i].state%>" >
+            <td><a href="/devices#<%=events[i].device%>"><%=events[i].device %></a></td>
+            <td><%=events[i].alarmname%></td>
+            <td><%=events[i].state%></td>
+            <td><%=events[i].description%></td>
+            <td><%=events[i].value%></td>
+            <td><%=events[i].datestamp%></td></tr>
        <% } %>
    </tbody>
 </table>

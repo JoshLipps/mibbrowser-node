@@ -33,6 +33,11 @@ Install
 
 TODO
 ----
+HIGH:
+Add custom OID in device config
+Another device using the UCD mib
+
+Med:
 1. Alarms/devices page - Live Update
 2. DB - types/names for oids
 4. Remove a Device
@@ -52,3 +57,4 @@ DONE
 3. Label Graphs with name, Get rid of stupid shit on graphs, Add visable points 
 1. Alarms page - links to device page 
 8. Configure Page -Pre-populated oid selections 
+Refresh alarms page (load new alarms)

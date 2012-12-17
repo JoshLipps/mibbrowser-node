@@ -8,7 +8,7 @@
 var db = require('../backend/mongoConn.js');
 
 //TODO pull this info from mongoDB
-var bodystuff = '',scripts = '', css = '<link rel="stylesheet" href="css/alarms.css" />',events;
+var bodystuff = '',scripts = '<script src="js/alarms.js"></script>', css = '<link rel="stylesheet" href="css/alarms.css" />',events;
 //var jquery = require('jquery');
 
 //jquery(get)

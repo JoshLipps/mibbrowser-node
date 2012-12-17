@@ -102,9 +102,16 @@ exports.getHost = function(req,res) {
 exports.getEvents = function(req,res) {
     db("mb.events", function(err, events){
         if(err) console.log("getEvents error: " + err);
-        events.find({device:req.query.device},{sort:{datestamp:-1}}).toArray(function(err, docs) {
-            res.send(docs);
-        });
+        if(req.query.device){
+            events.find({device:req.query.device},{sort:{datestamp:-1}}).toArray(function(err, docs) {
+                res.send(docs);
+            });
+        } else if(req.query.datestamp) {
+            console.log("Check for alarms since: "+ new Date(Number(req.query.datestamp)));
+            events.find({datestamp: { $gte: new Date(Number(req.query.datestamp))}},{sort:{datestamp:-1}}).toArray(function(err, docs) {
+                res.send(docs);
+            });
+        }
     });
 };
 
@@ -143,6 +150,7 @@ exports.getHistory = function(req,res) {
         }
     });
 };
+
 exports.ping = function(req, res) {
     res.send("pong");
     console.log("Mark -- Pong");
