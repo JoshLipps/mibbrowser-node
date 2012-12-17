@@ -3,20 +3,45 @@
 var numberOfAlarms = 0; //lawl
 //var selectOptions;
 
-$(document).ready(function() {
-   var firstDevice = window.location.hash ? 
-      window.location.hash.replace('#', '') : "snmp.yawnneko.com";
+var interval = { // from http://stackoverflow.com/a/8636050/953401
+    //to keep a reference to all the intervals
+    intervals : {},
 
-   $('.icon-wrench').click(function(){$("#myModal").modal('show');});
-   $('.icon-remove').live('click', removeOIDRow);
-   //fillModal(firstDevice);
-   google.setOnLoadCallback(activeclick(document.getElementById(firstDevice)));
+    //create another interval
+    make : function ( fun, delay ) {
+        //see explanation after the code
+        var newInterval = setInterval.apply(
+            window, [ fun, delay ].concat( [].slice.call(arguments, 2) )
+        );
+        this.intervals[ newInterval ] = true;
+        return newInterval;
+    },
+
+    //clear a single interval
+    clear : function ( id ) {
+        return clearInterval( this.intervals[id] );
+    },
+
+    //clear all intervals
+    clearAll : function () {
+        var all = Object.keys( this.intervals ), len = all.length;
+        while ( len --> 0 ) { clearInterval( all.shift() ); }
+    }
+};
+
+$(document).ready(function() {
+    var firstDevice = window.location.hash ? 
+        window.location.hash.replace('#', '') : "snmp.yawnneko.com";
+   
+    $('.icon-wrench').click(function(){$("#myModal").modal('show');});
+    $('.icon-remove').live('click', removeOIDRow);
+    //fillModal(firstDevice);
+    google.setOnLoadCallback(activeclick(document.getElementById(firstDevice)));
 });
 
 //Draw all charts for a device
 function drawCharts(device){
 	$.get('api/host',{hostname:device},function(host){
-		//console.log("Device:"+device+" "+host);
 		host.alarms.forEach(function (ele,index,array){
 			//add div 
 			$.getJSON("/api/supportedOids", function(data){
@@ -34,7 +59,6 @@ function drawCharts(device){
 }
 
 function drawChart(hostname,oid,index) {
- 	//console.log(hostname+index);
 	var data = new google.visualization.DataTable(),	
  	options = {is3D: true,'fill': 30,'legend': 'none'},
  	chart = new google.visualization.LineChart(document.getElementById('chartDiv'+index)),
@@ -54,7 +78,8 @@ function drawChart(hostname,oid,index) {
 		dateFormat.format(data, 0);
 		chart.draw(data, options);
 	});
-	}
+}
+
 //Host list item clicked on 
 function activeclick(elem){
     //console.log('The ID of the element which triggered this is: #' + elem.id);
@@ -66,11 +91,15 @@ function activeclick(elem){
     reDrawGraphs(elem.id);
     //Fill in config modal
  	fillModal(elem.id); 
+    interval.clearAll();
+    interval.make("getNewAlarms(\""+elem.id+"\")", 30000);
 }
+
 function newHost(){
 	clearModal();
 	$("#myModal").modal('show');
 }
+
 function clearModal(){
 	$("#oids").children().remove();
 	$('#hostname').val("");
@@ -82,13 +111,12 @@ function clearModal(){
 
 function reDrawGraphs(host){
 	$("#charts").children().remove();
-	//console.log(host);
 	drawCharts(host);
 }
 
 function redrawAlarms(id){
 	$("#alarms").children().remove();
-	$.get('/api/Events',{device:id}, function(data){
+	$.get('/api/events',{device:id}, function(data){
     	for(var i=0;i<data.length;i++){
     		$("#alarms").append('<tr class="'+data[i].state+'" >'+
     			'<td><a href="/devices#'+data[i].device+'"> '+data[i].device+'</a></td>'+
@@ -186,7 +214,6 @@ function postHost() {
 		host.alarms[rowIndex]=oid;
 	});
 
-    //console.log(host);
     $.post("api/host",host);
 }
 
@@ -208,4 +235,21 @@ function fillOidsSelector(index, oid) {
             $("#oidsSelector"+index).append(selectOptions);
         });
     //} else { $("#oidsSelector"+index).append(selectOptions); }
+}
+
+function getNewAlarms(hostname) {
+    var i, eventsHTML = "", now = new Date();
+    $.getJSON("api/events", {device:hostname, datestamp:now.setSeconds(now.getSeconds()-30)}, function(events){
+        for (i = 0; i<events.length; i++) {
+            eventsHTML+= "<tr class=\""+events[i].state+"\">"
+            +"<td><a href=\"/devices#"+events[i].device+"\">"+events[i].device+"</a></td>"
+            +"<td>"+events[i].alarmname+"</td>"
+            +"<td>"+events[i].state+"</td>"
+            +"<td>"+events[i].description+"</td>"
+            +"<td>"+events[i].value+"</td>"
+            +"<td>"+new Date(events[i].datestamp)+"</td></tr>";
+        }
+        $("#alarms").prepend(eventsHTML);
+        if (eventsHTML !== "") console.log("Events added.");
+    });
 }

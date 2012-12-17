@@ -21,7 +21,6 @@ exports.index = function(req, res){
         if(err) console.log("Devices error: " + err);
         devices.find({},{hostname:1}).toArray(function(err, devices) {
             if(err) console.log("Devices find error: " + err);
-            //console.log(devices);
             db("mb.events", function(err, events){
                 events.find({device:devices[0].hostname},{sort:{datestamp:-1}}).toArray(function(err, events) {
                     if(err) console.log("Events error: " + err);

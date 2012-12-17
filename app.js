@@ -54,7 +54,7 @@ app.get('/api/supportedOids', api.getSupportedOids);
 app.get('/api/ping', api.ping);
 
 if(pollEnabled) {
-    console.log("Polling Enabled.");
+    if (process.env.DEBUG) console.log("Polling Enabled.");
     //Single out of cycle poll cycle;
     poll.go();
 
