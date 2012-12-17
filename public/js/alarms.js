@@ -1,6 +1,6 @@
 $(document).ready(function(){
     getNewAlarms();
-    setInterval("getNewAlarms()", 30000);
+    setInterval(function(){ getNewAlarms(); }, 30000);
 });
 
 function getNewAlarms() {

@@ -61,7 +61,7 @@ if(pollEnabled) {
     //Poll loop
     loop = setInterval(function(){
     var time = new Date();
-        console.log("Interval " + time.toString());
+        if (process.env.DEBUG) console.log("Interval " + time.toString());
         poll.go();
     }, 30000);
 } else { console.log("Polling Disabled."); }

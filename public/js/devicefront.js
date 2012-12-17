@@ -92,7 +92,7 @@ function activeclick(elem){
     //Fill in config modal
  	fillModal(elem.id); 
     interval.clearAll();
-    interval.make("getNewAlarms(\""+elem.id+"\")", 30000);
+    interval.make(function(){ getNewAlarms(elem.id); }, 30000);
 }
 
 function newHost(){
