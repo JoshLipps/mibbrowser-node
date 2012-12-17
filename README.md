@@ -34,27 +34,28 @@ Install
 TODO
 ----
 HIGH:
-Add custom OID in device config
-Another device using the UCD mib
+* Add custom OID in device config
+* Another device using the UCD mib
 
 Med:
-1. Alarms/devices page - Live Update
-2. DB - types/names for oids
-4. Remove a Device
-5. Browser page - Add ucdavis mib 
-6. When removing oids clean history and events
-7. Delete events?
+* Alarms/devices page - Live Update
+* DB - types/names for oids
+* Remove a Device
+* Browser page - Add ucdavis mib 
+* When removing oids clean history and events
+* Delete events?
 
 Low:
-6. Graphs - Click zooming in and out(date filter on api call)
-5. Devices page - Configure a Graph  
-9. Alarms page - Add filter(sorta done with link)
+* Graphs - Click zooming in and out(date filter on api call)
+* Devices page - Configure a Graph  
+* Alarms page - Add filter(sorta done with link)
+* Store datestamps in mb.history as Date().
 
 snmptranslate -Tz -m UCD-SNMP-MIB::ucdavis |awk -e '{ print $2 "\t" $1}' |sed s/\"//g
 
 DONE
 ----
-3. Label Graphs with name, Get rid of stupid shit on graphs, Add visable points 
-1. Alarms page - links to device page 
-8. Configure Page -Pre-populated oid selections 
-Refresh alarms page (load new alarms)
+* Label Graphs with name, Get rid of stupid shit on graphs, Add visable points 
+* Alarms page - links to device page 
+* Configure Page -Pre-populated oid selections 
+* Refresh alarms page (load new alarms)
